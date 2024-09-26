@@ -1,0 +1,157 @@
+[
+    {
+        "name": "Accès Wifi dans toutes les pièces",
+        "icon": "wifi-icon.svg ",
+        "type": 1
+    },
+    {
+        "name": "Ethernet dans les espaces de travail",
+        "icon": "wirenet-icon.svg",
+        "type": 1
+    },
+    {
+        "name": "Chauffage collectif",
+        "icon": "heater-icon.svg",
+        "type": 1
+    },
+    {
+        "name": "Chauffage individuel",
+        "icon": "heater-icon.svg",
+        "type": 1
+    },
+    {
+        "name": "Climatisation",
+        "icon": "ac-icon.svg",
+        "type": 1
+    },
+    {
+        "name": "Parking gratuit",
+        "icon": "freeparking-icon.svg",
+        "type": 1
+    },
+    {
+        "name": "Parking payant",
+        "icon": "paidparking-icon.svg",
+        "type": 1
+    },
+    {
+        "name": "Garage à vélo",
+        "icon": "bikegarage-icon.svg",
+        "type": 1
+    },
+    {
+        "name": "Animaux acceptés",
+        "icon": "pets-icon.svg",
+        "type": 1
+    },
+    {
+        "name": "Ménage hébdomadaire dans les communs",
+        "icon": "cleaning-icon.svg",
+        "type": 1
+    },
+    {
+        "name": "Terrasse",
+        "icon": "terrace-icon.svg",
+        "type": 1
+    },
+    {
+        "name": "Balcon",
+        "icon": "balcony-icon.svg",
+        "type": 1
+    },
+    {
+        "name": "Espace extérieur",
+        "icon": "ext-icon.svg",
+        "type": 1
+    },
+    {
+        "name": "Système d'alarme",
+        "icon": "alarm-icon.svg",
+        "type": 1
+    },
+    {
+        "name": "Concierge",
+        "icon": "concierge-icon.svg",
+        "type": 1
+    },
+    {
+        "name": "Cuisine équipée",
+        "icon": "kitchen-icon.svg",
+        "type": 2
+    },
+    {
+        "name": "Espace de travail dédié",
+        "icon": "workspace-icon.svg",
+        "type": 2
+    },
+    {
+        "name": "Espace détente collectifs",
+        "icon": "couch-icon.svg",
+        "type": 2
+    },
+    {
+        "name": "Congélateur",
+        "icon": "freezer-icon.svg",
+        "type": 2
+    },
+    {
+        "name": "Lave-vaisselle",
+        "icon": "dishwasher-icon.svg",
+        "type": 2
+    },
+    {
+        "name": "Réfrigérateurs individuels",
+        "icon": "fridge-icon.svg",
+        "type": 2
+    },
+    {
+        "name": "Lave-linge",
+        "icon": "washer-icon.svg",
+        "type": 2
+    },
+    {
+        "name": "Sèche-linge",
+        "icon": "dryer-icon.svg",
+        "type": 2
+    },
+    {
+        "name": "Télévision",
+        "icon": "television-icon.svg",
+        "type": 2
+    },
+    {
+        "name": "Vidéoprojecteur",
+        "icon": "projector-icon.svg",
+        "type": 2
+    },
+    {
+        "name": "SYstème HiFi",
+        "icon": "hifi-icon.svg",
+        "type": 2
+    },
+    {
+        "name": "Lit simple",
+        "icon": "simple-icon.svg",
+        "type": 3
+    },
+    {
+        "name": "Lit double",
+        "icon": "double-icon.svg",
+        "type": 3
+    },
+    {
+        "name": "Grand bureau",
+        "icon": "desk-icon.svg",
+        "type": 3
+    },
+    {
+        "name": "Ethernet",
+        "icon": "wirenet-icon.svg",
+        "type": 3
+    },
+    {
+        "name": "Salle de bain personnelle",
+        "icon": "persbath-icon.svg",
+        "type": 3
+    }
+]

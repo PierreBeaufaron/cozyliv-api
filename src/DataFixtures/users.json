@@ -1,0 +1,113 @@
+[
+    {
+      "email": "alex.machin@example.com",
+      "roles": ["ROLE_ADMIN"],
+      "password": "Alex123",
+      "firstname": "Alex",
+      "lastname": "Machin",
+      "gender": 1,
+      "address": "15 Avenue Maurice Thorez",
+      "avatar": "avatar0.jpg"
+    },
+    {
+      "email": "jean.durand@example.com",
+      "roles": ["ROLE_OWNER"],
+      "password": "Jean123",
+      "firstname": "Jean",
+      "lastname": "Durand",
+      "gender": 1,
+      "address": "15 Rue de la Paix",
+      "avatar": "avatar1.jpg"
+    },
+    {
+      "email": "sophie.martin@example.com",
+      "roles": ["ROLE_OWNER"],
+      "password": "Sophie234",
+      "firstname": "Sophie",
+      "lastname": "Martin",
+      "gender": 2,
+      "address": "22 Avenue des Champs-Élysées",
+      "avatar": "avatar2.jpg"
+    },
+    {
+      "email": "pierre.lemoine@example.com",
+      "roles": ["ROLE_OWNER"],
+      "password": "Pierre345",
+      "firstname": "Pierre",
+      "lastname": "Lemoine",
+      "gender": 1,
+      "address": "3 Allée des Tilleuls",
+      "avatar": "avatar3.jpg"
+    },
+    {
+      "email": "lucie.bernard@example.com",
+      "roles": ["ROLE_OWNER"],
+      "password": "Lucie456",
+      "firstname": "Lucie",
+      "lastname": "Bernard",
+      "gender": 2,
+      "address": "8 Rue des Acacias",
+      "avatar": "avatar4.jpg"
+    },
+    {
+      "email": "antoine.moreau@example.com",
+      "roles": ["ROLE_OWNER"],
+      "password": "Antoine567",
+      "firstname": "Antoine",
+      "lastname": "Moreau",
+      "gender": 1,
+      "address": "12 Avenue Victor Hugo",
+      "avatar": "avatar5.jpg"
+    },
+    {
+      "email": "marie.dufour@example.com",
+      "roles": ["ROLE_USER"],
+      "password": "Marie678",
+      "firstname": "Marie",
+      "lastname": "Dufour",
+      "gender": 2,
+      "address": "18 Rue de la République",
+      "avatar": "avatar6.jpg"
+    },
+    {
+      "email": "thomas.dupont@example.com",
+      "roles": ["ROLE_USER"],
+      "password": "Thomas789",
+      "firstname": "Thomas",
+      "lastname": "Dupont",
+      "gender": 1,
+      "address": "6 Rue de la Liberté",
+      "avatar": "avatar7.jpg"
+    },
+    {
+      "email": "camille.lefevre@example.com",
+      "roles": ["ROLE_USER"],
+      "password": "Camille890",
+      "firstname": "Camille",
+      "lastname": "Lefevre",
+      "gender": 3,
+      "address": "23 Rue des Lilas",
+      "avatar": "avatar8.jpg"
+    },
+    {
+      "email": "louis.perrin@example.com",
+      "roles": ["ROLE_USER"],
+      "password": "Louis901",
+      "firstname": "Louis",
+      "lastname": "Perrin",
+      "gender": 1,
+      "address": "10 Allée des Marronniers",
+      "avatar": "avatar9.jpg"
+    },
+    {
+      "email": "elodie.fournier@example.com",
+      "roles": ["ROLE_USER"],
+      "password": "Elodie012",
+      "firstname": "Elodie",
+      "lastname": "Fournier",
+      "gender": 2,
+      "address": "14 Rue Georges Sand",
+      "avatar": "avatar10.jpg"
+    }
+  ]
+  

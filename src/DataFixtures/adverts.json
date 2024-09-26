@@ -1,0 +1,133 @@
+[
+    {
+      "title": "Coliving moderne au cœur du centre-ville",
+      "description": "Découvrez ce coliving au design moderne, parfait pour les jeunes actifs ou les étudiants recherchant un espace de vie chaleureux et fonctionnel. Les espaces communs sont lumineux et spacieux, avec une cuisine partagée, des zones de coworking et des chambres privées pour plus d'intimité. Ce lieu propose un cadre convivial avec des services inclus comme le ménage et le wifi, et se situe à proximité des commerces et des transports publics.",
+      "address": "25 Rue Victor Hugo"
+    },
+    {
+      "title": "Coliving éco-responsable en périphérie",
+      "description": "Ce coliving écologique vous propose de vivre dans un environnement respectueux de la nature, avec des espaces partagés comme une grande terrasse et un jardin. Les chambres sont équipées pour le télétravail, et les espaces communs favorisent les rencontres et les échanges. Situé en périphérie, vous profitez du calme tout en étant à proximité des commodités. Parfait pour ceux qui veulent allier tranquillité et vie communautaire.",
+      "address": "48 Allée des Tilleuls"
+    },
+    {
+      "title": "Coliving cosy près du théâtre",
+      "description": "Situé à quelques pas du théâtre principal, ce coliving cosy vous propose des chambres individuelles décorées avec goût et un grand salon commun pour partager des moments conviviaux. La cuisine est entièrement équipée, et des événements communautaires sont organisés régulièrement pour encourager les échanges entre colivers. Un lieu idéal pour ceux qui cherchent à vivre dans un environnement chaleureux et dynamique.",
+      "address": "12 Rue Molière"
+    },
+    {
+      "title": "Coliving étudiant proche des universités",
+      "description": "Parfait pour les étudiants, ce coliving est situé non loin des universités et des grandes écoles. Il dispose de chambres confortables et modernes, d'un grand espace commun pour se détendre ou travailler, et d'une cuisine partagée. Le ménage et le wifi sont inclus, et des activités régulières sont organisées pour créer une véritable communauté étudiante. Proche des transports en commun et des commerces, tout est fait pour faciliter votre quotidien.",
+      "address": "35 Rue Pierre et Marie Curie"
+    },
+    {
+      "title": "Coliving avec vue dégagée",
+      "description": "Ce coliving unique propose une vue dégagée sur les environs, dans un quartier calme et agréable. Les chambres sont lumineuses et spacieuses, avec des espaces de travail privés. Les parties communes incluent une cuisine moderne, un salon convivial et une terrasse pour profiter de l'extérieur. Le coliving offre une ambiance idéale pour les jeunes professionnels qui souhaitent allier vie communautaire et confort personnel.",
+      "address": "67 Rue de la Libération"
+    },
+    {
+      "title": "Coliving design dans un quartier résidentiel",
+      "description": "Dans un quartier résidentiel calme, ce coliving design offre un cadre de vie contemporain et confortable. Les espaces communs, décorés dans un style industriel, comprennent un salon spacieux, une cuisine équipée et un espace de coworking. Chaque chambre dispose d'un bureau privé pour travailler dans le calme. Idéal pour les jeunes créatifs ou professionnels à la recherche d'une atmosphère moderne et dynamique.",
+      "address": "22 Rue Gustave Eiffel"
+    },
+    {
+      "title": "Coliving artistique près des galeries",
+      "description": "Ce coliving, idéal pour les artistes et créatifs, se situe à proximité de nombreuses galeries d'art. Avec des espaces communs conçus pour favoriser l'inspiration et la collaboration, il inclut un atelier partagé, un salon convivial et une cuisine ouverte. Chaque chambre est décorée de manière unique, reflétant l'esprit artistique du lieu. Des événements sont régulièrement organisés pour stimuler la créativité des colivers.",
+      "address": "18 Rue Claude Monet"
+    },
+    {
+      "title": "Coliving chaleureux en périphérie tranquille",
+      "description": "Ce coliving chaleureux est situé en périphérie, offrant à ses habitants un cadre de vie paisible et confortable. Les chambres sont spacieuses, avec un espace bureau pour travailler en toute tranquillité. Les espaces communs comprennent un grand salon, une cuisine partagée et une terrasse extérieure. Un environnement idéal pour ceux qui recherchent le calme tout en profitant des avantages de la vie communautaire.",
+      "address": "5 Rue Charles de Gaulle"
+    },
+    {
+      "title": "Coliving moderne à deux pas du centre-ville",
+      "description": "Ce coliving moderne est à quelques minutes du centre-ville, offrant un accès facile aux commerces, restaurants et transports. Les chambres sont équipées de tout le confort nécessaire, tandis que les espaces communs sont vastes et accueillants. Vous pourrez profiter d'une grande cuisine partagée, d'un espace de détente et d'une salle de coworking. Ce lieu est parfait pour les jeunes professionnels cherchant à vivre dans une ambiance conviviale et dynamique.",
+      "address": "44 Avenue Louis Pasteur"
+    },
+    {
+      "title": "Coliving calme près du parc",
+      "description": "Situé à côté d'un grand parc, ce coliving est idéal pour ceux qui cherchent à vivre dans un cadre vert et reposant. Les chambres sont lumineuses, avec des espaces de travail privatifs, et les espaces communs incluent un salon, une cuisine et un jardin partagé. Les colivers peuvent se retrouver pour partager des moments conviviaux ou se détendre dans les espaces extérieurs. Parfait pour les amateurs de nature et de tranquillité.",
+      "address": "8 Rue des Acacias"
+    },
+    {
+      "title": "Coliving convivial en périphérie",
+      "description": "Ce coliving en périphérie offre un cadre convivial avec des espaces partagés spacieux et lumineux. Les chambres sont équipées pour le télétravail et la détente, tandis que les parties communes comprennent un grand salon et une cuisine moderne. Les colivers pourront profiter d'une atmosphère chaleureuse et d'événements communautaires organisés régulièrement. Parfait pour ceux qui recherchent un cadre de vie paisible tout en étant proche de la ville.",
+      "address": "12 Rue Simone de Beauvoir"
+    },
+    {
+      "title": "Coliving spacieux près du marché",
+      "description": "À proximité du marché local, ce coliving spacieux offre un cadre de vie agréable et dynamique. Les chambres sont bien aménagées avec des espaces de travail privés, tandis que les espaces communs incluent une grande cuisine partagée, un salon confortable et une terrasse extérieure. Les colivers pourront profiter d'une ambiance conviviale et de nombreuses activités pour créer des liens avec leurs colocataires.",
+      "address": "33 Rue du Faubourg"
+    },
+    {
+      "title": "Coliving confortable à proximité du centre culturel",
+      "description": "Situé près du centre culturel, ce coliving propose un cadre de vie confortable et moderne, parfait pour ceux qui aiment allier travail et loisirs. Les chambres sont spacieuses et équipées pour le télétravail. Les espaces communs incluent une cuisine partagée, un salon convivial et un coin lecture. Idéal pour les jeunes professionnels ou les étudiants souhaitant vivre dans un environnement inspirant et propice aux rencontres.",
+      "address": "14 Rue des Rossignols"
+    },
+    {
+      "title": "Coliving calme en bordure de ville",
+      "description": "Ce coliving en bordure de ville est l'endroit parfait pour ceux qui recherchent à la fois calme et proximité des commodités. Les chambres sont bien aménagées avec des espaces de travail privatifs, tandis que les espaces communs incluent une grande cuisine, un salon moderne et une terrasse. L'ambiance y est conviviale, avec des événements organisés régulièrement pour favoriser les échanges entre colivers.",
+      "address": "17 Allée des Chênes"
+    },
+    {
+      "title": "Coliving moderne à quelques pas du musée",
+      "description": "Ce coliving moderne est situé à quelques pas du musée local. Idéal pour les amateurs de culture, il offre des espaces communs spacieux et lumineux, ainsi qu'une grande cuisine équipée pour les repas partagés. Chaque chambre est meublée avec soin, avec des espaces de travail privatifs. Les colivers peuvent profiter d'activités régulières pour mieux se connaître et créer une communauté soudée.",
+      "address": "19 Avenue de la Liberté"
+    },
+    {
+      "title": "Coliving dynamique proche des commerces",
+      "description": "Venez vivre dans ce coliving dynamique situé à proximité des commerces et des restaurants. Les chambres sont modernes et bien équipées, et les espaces communs sont parfaits pour se détendre ou travailler. Ce coliving propose également des événements réguliers pour créer des liens entre les colivers. L'environnement est idéal pour ceux qui cherchent à allier confort et vie sociale active.",
+      "address": "23 Rue des Tilleuls"
+    },
+    {
+      "title": "Coliving moderne près des transports en commun",
+      "description": "Situé à quelques minutes des principaux axes de transports, ce coliving est parfait pour les personnes souhaitant un accès rapide à la ville. Les chambres sont confortables et bien aménagées, avec des espaces de travail dédiés. Les espaces communs incluent une grande cuisine partagée, un salon convivial et une salle de coworking. Idéal pour les jeunes professionnels.",
+      "address": "27 Avenue Jean Moulin"
+    },
+    {
+      "title": "Coliving lumineux à quelques minutes du centre",
+      "description": "Situé dans un quartier calme à seulement quelques minutes du centre, ce coliving lumineux vous propose des chambres modernes et bien aménagées, ainsi qu'un grand espace commun comprenant une cuisine ouverte, un salon, et un espace de détente. Ce lieu est idéal pour les jeunes actifs cherchant à vivre dans un cadre convivial tout en ayant un accès rapide aux commodités.",
+      "address": "15 Rue des Tournelles"
+    },
+    {
+      "title": "Coliving spacieux avec espaces extérieurs",
+      "description": "Profitez d'un cadre de vie paisible dans ce coliving spacieux, idéal pour ceux qui recherchent de la convivialité sans sacrifier leur confort personnel. Chaque chambre est équipée d'un bureau et de rangements, et les espaces communs incluent une cuisine moderne, un salon lumineux, et un grand espace extérieur pour se détendre. Idéal pour les amoureux du calme en périphérie.",
+      "address": "29 Rue des Bouleaux"
+    },
+    {
+      "title": "Coliving moderne à deux pas du centre historique",
+      "description": "Ce coliving moderne est situé à quelques minutes à pied du centre historique. Avec des chambres bien équipées et décorées avec goût, il offre également des espaces communs tels qu'une cuisine partagée et un grand salon. Vous pourrez profiter de la proximité des sites historiques tout en vivant dans un environnement moderne et confortable.",
+      "address": "7 Rue de la Liberté"
+    },
+    {
+      "title": "Coliving idéal pour étudiants et jeunes professionnels",
+      "description": "Situé à quelques minutes des principales universités et zones d'affaires, ce coliving est parfait pour les étudiants et les jeunes professionnels. Il offre des chambres confortables avec espace de travail, et les parties communes incluent une cuisine moderne et un espace de détente. Des événements communautaires sont régulièrement organisés pour créer un véritable esprit de groupe.",
+      "address": "4 Rue des Peupliers"
+    },
+    {
+      "title": "Coliving familial en périphérie calme",
+      "description": "Idéal pour les petites familles ou les couples, ce coliving est situé en périphérie, dans un quartier calme et agréable. Les chambres sont spacieuses, et les espaces communs comprennent une grande cuisine partagée, un salon convivial, et un espace de jeux pour enfants. Vous pourrez profiter d'un cadre paisible tout en étant proche des commodités.",
+      "address": "28 Rue Jean Jaurès"
+    },
+    {
+      "title": "Coliving confortable et moderne en zone résidentielle",
+      "description": "Situé dans une zone résidentielle calme, ce coliving vous propose des chambres confortables et modernes. Les espaces communs incluent une grande cuisine équipée, un salon, et une terrasse pour profiter des beaux jours. Ce lieu est idéal pour les jeunes actifs qui recherchent la tranquillité tout en étant à proximité des commodités.",
+      "address": "32 Allée des Lilas"
+    },
+    {
+      "title": "Coliving spacieux avec rooftop",
+      "description": "Ce coliving spacieux et lumineux vous propose de grands espaces communs et un rooftop pour profiter de moments de détente en extérieur. Les chambres sont modernes et équipées, et les colivers peuvent partager des moments conviviaux dans la cuisine commune ou le salon. Situé dans un quartier tranquille, il offre un cadre de vie confortable et agréable.",
+      "address": "10 Rue Georges Sand"
+    },
+    {
+      "title": "Coliving moderne à proximité des commerces",
+      "description": "Situé à deux pas des commerces et des transports en commun, ce coliving moderne vous propose un cadre de vie confortable avec des chambres bien aménagées et des espaces communs lumineux. Vous y trouverez une cuisine partagée, un salon, et des événements réguliers pour permettre aux colivers de mieux se connaître. Parfait pour ceux qui cherchent à allier confort et vie urbaine.",
+      "address": "21 Rue des Charmes"
+    },
+    {
+      "title": "Coliving calme en bordure de ville",
+      "description": "Profitez du calme de la périphérie avec ce coliving situé en bordure de ville. Les chambres sont modernes et bien équipées, avec des espaces communs spacieux comme un salon et une grande cuisine. L'endroit idéal pour ceux qui recherchent la tranquillité tout en restant proches des commodités.",
+      "address": "35 Rue des Marronniers"
+    }
+  ]
+  

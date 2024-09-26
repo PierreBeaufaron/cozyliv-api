@@ -30,9 +30,16 @@ class Service
     #[ORM\ManyToMany(targetEntity: Advert::class, mappedBy: 'services')]
     private Collection $adverts;
 
+    /**
+     * @var Collection<int, Room>
+     */
+    #[ORM\ManyToMany(targetEntity: Room::class, mappedBy: 'services')]
+    private Collection $rooms;
+
     public function __construct()
     {
         $this->adverts = new ArrayCollection();
+        $this->rooms = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -98,6 +105,33 @@ class Service
     {
         if ($this->adverts->removeElement($advert)) {
             $advert->removeService($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Room>
+     */
+    public function getRooms(): Collection
+    {
+        return $this->rooms;
+    }
+
+    public function addRoom(Room $room): static
+    {
+        if (!$this->rooms->contains($room)) {
+            $this->rooms->add($room);
+            $room->addService($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRoom(Room $room): static
+    {
+        if ($this->rooms->removeElement($room)) {
+            $room->removeService($this);
         }
 
         return $this;
