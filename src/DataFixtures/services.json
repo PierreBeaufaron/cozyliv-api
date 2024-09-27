@@ -65,6 +65,11 @@
         "type": 1
     },
     {
+        "name": "Espace barbecue",
+        "icon": "bbq-icon.svg",
+        "type": 1
+    },
+    {
         "name": "Système d'alarme",
         "icon": "alarm-icon.svg",
         "type": 1
@@ -72,6 +77,16 @@
     {
         "name": "Concierge",
         "icon": "concierge-icon.svg",
+        "type": 1
+    },
+    {
+        "name": "Piscine",
+        "icon": "pool-icon.svg",
+        "type": 1
+    },
+    {
+        "name": "Salle de sport",
+        "icon": "gym-icon.svg",
         "type": 1
     },
     {
@@ -125,8 +140,13 @@
         "type": 2
     },
     {
-        "name": "SYstème HiFi",
+        "name": "Système HiFi",
         "icon": "hifi-icon.svg",
+        "type": 2
+    },
+    {
+        "name": "Jacuzzi",
+        "icon": "jacuzzi-icon.svg",
         "type": 2
     },
     {
@@ -140,13 +160,23 @@
         "type": 3
     },
     {
-        "name": "Grand bureau",
-        "icon": "desk-icon.svg",
+        "name": "Bureau ajustable",
+        "icon": "adjustabledesk-icon.svg",
+        "type": 3
+    },
+    {
+        "name": "Dressing",
+        "icon": "dressing-icon.svg",
         "type": 3
     },
     {
         "name": "Ethernet",
         "icon": "wirenet-icon.svg",
+        "type": 3
+    },
+    {
+        "name": "Télévision",
+        "icon": "television-icon.svg",
         "type": 3
     },
     {

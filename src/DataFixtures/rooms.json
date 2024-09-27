@@ -1,0 +1,342 @@
+[
+    {
+        "name": "Chambre confort",
+        "rentPrice": 400,
+        "surfaceArea": 12
+    },
+    {
+        "name": "Studio lumineux",
+        "rentPrice": 850,
+        "surfaceArea": 40
+    },
+    {
+        "name": "Chambre cosy",
+        "rentPrice": 370,
+        "surfaceArea": 11
+    },
+    {
+        "name": "Suite spacieuse",
+        "rentPrice": 920,
+        "surfaceArea": 45
+    },
+    {
+        "name": "Chambre standard",
+        "rentPrice": 410,
+        "surfaceArea": 13
+    },
+    {
+        "name": "Appartement partagé",
+        "rentPrice": 600,
+        "surfaceArea": 25
+    },
+    {
+        "name": "Chambre simple",
+        "rentPrice": 360,
+        "surfaceArea": 10
+    },
+    {
+        "name": "Suite moderne",
+        "rentPrice": 900,
+        "surfaceArea": 43
+    },
+    {
+        "name": "Chambre fonctionnelle",
+        "rentPrice": 420,
+        "surfaceArea": 14
+    },
+    {
+        "name": "Appartement lumineux",
+        "rentPrice": 750,
+        "surfaceArea": 35
+    },
+    {
+        "name": "Chambre économique",
+        "rentPrice": 350,
+        "surfaceArea": 10
+    },
+    {
+        "name": "Chambre premium",
+        "rentPrice": 930,
+        "surfaceArea": 44
+    },
+    {
+        "name": "Studio moderne",
+        "rentPrice": 680,
+        "surfaceArea": 28
+    },
+    {
+        "name": "Chambre de charme",
+        "rentPrice": 520,
+        "surfaceArea": 20
+    },
+    {
+        "name": "Suite cosy",
+        "rentPrice": 870,
+        "surfaceArea": 39
+    },
+    {
+        "name": "Studio compact",
+        "rentPrice": 480,
+        "surfaceArea": 18
+    },
+    {
+        "name": "Chambre étudiante",
+        "rentPrice": 370,
+        "surfaceArea": 11
+    },
+    {
+        "name": "Chambre design",
+        "rentPrice": 750,
+        "surfaceArea": 32
+    },
+    {
+        "name": "Chambre spacieuse",
+        "rentPrice": 890,
+        "surfaceArea": 42
+    },
+    {
+        "name": "Chambre minimaliste",
+        "rentPrice": 380,
+        "surfaceArea": 12
+    },
+    {
+        "name": "Suite élégante",
+        "rentPrice": 920,
+        "surfaceArea": 45
+    },
+    {
+        "name": "Chambre abordable",
+        "rentPrice": 410,
+        "surfaceArea": 13
+    },
+    {
+        "name": "Studio cosy",
+        "rentPrice": 680,
+        "surfaceArea": 27
+    },
+    {
+        "name": "Chambre classique",
+        "rentPrice": 550,
+        "surfaceArea": 22
+    },
+    {
+        "name": "Chambre moderne",
+        "rentPrice": 780,
+        "surfaceArea": 34
+    },
+    {
+        "name": "Studio économique",
+        "rentPrice": 400,
+        "surfaceArea": 14
+    },
+    {
+        "name": "Chambre confortable",
+        "rentPrice": 720,
+        "surfaceArea": 30
+    },
+    {
+        "name": "Chambre lumineuse",
+        "rentPrice": 650,
+        "surfaceArea": 26
+    },
+    {
+        "name": "Chambre bien équipée",
+        "rentPrice": 820,
+        "surfaceArea": 38
+    },
+    {
+        "name": "Chambre économique",
+        "rentPrice": 350,
+        "surfaceArea": 10
+    },
+    {
+        "name": "Chambre standard",
+        "rentPrice": 440,
+        "surfaceArea": 15
+    },
+    {
+        "name": "Chambre moderne",
+        "rentPrice": 790,
+        "surfaceArea": 35
+    },
+    {
+        "name": "Suite spacieuse",
+        "rentPrice": 920,
+        "surfaceArea": 45
+    },
+    {
+        "name": "Chambre économique",
+        "rentPrice": 350,
+        "surfaceArea": 10
+    },
+    {
+        "name": "Chambre fonctionnelle",
+        "rentPrice": 470,
+        "surfaceArea": 17
+    },
+    {
+        "name": "Studio moderne",
+        "rentPrice": 700,
+        "surfaceArea": 29
+    },
+    {
+        "name": "Chambre de luxe",
+        "rentPrice": 930,
+        "surfaceArea": 44
+    },
+    {
+        "name": "Chambre charmante",
+        "rentPrice": 490,
+        "surfaceArea": 19
+    },
+    {
+        "name": "Chambre cosy",
+        "rentPrice": 620,
+        "surfaceArea": 24
+    },
+    {
+        "name": "Chambre moderne",
+        "rentPrice": 810,
+        "surfaceArea": 37
+    },
+    {
+        "name": "Studio compact",
+        "rentPrice": 460,
+        "surfaceArea": 16
+    },
+    {
+        "name": "Chambre minimaliste",
+        "rentPrice": 400,
+        "surfaceArea": 13
+    },
+    {
+        "name": "Suite élégante",
+        "rentPrice": 880,
+        "surfaceArea": 41
+    },
+    {
+        "name": "Chambre abordable",
+        "rentPrice": 380,
+        "surfaceArea": 12
+    },
+    {
+        "name": "Chambre classique",
+        "rentPrice": 700,
+        "surfaceArea": 28
+    },
+    {
+        "name": "Chambre bien située",
+        "rentPrice": 800,
+        "surfaceArea": 36
+    },
+    {
+        "name": "Studio lumineux",
+        "rentPrice": 600,
+        "surfaceArea": 23
+    },
+    {
+        "name": "Chambre moderne",
+        "rentPrice": 770,
+        "surfaceArea": 33
+    },
+    {
+        "name": "Studio économique",
+        "rentPrice": 420,
+        "surfaceArea": 15
+    },
+    {
+        "name": "Chambre confortable",
+        "rentPrice": 580,
+        "surfaceArea": 21
+    },
+    {
+        "name": "Chambre lumineuse",
+        "rentPrice": 740,
+        "surfaceArea": 31
+    },
+    {
+        "name": "Suite moderne",
+        "rentPrice": 890,
+        "surfaceArea": 42
+    },
+    {
+        "name": "Chambre charmante",
+        "rentPrice": 560,
+        "surfaceArea": 20
+    },
+    {
+        "name": "Chambre premium",
+        "rentPrice": 920,
+        "surfaceArea": 45
+    },
+    {
+        "name": "Chambre fonctionnelle",
+        "rentPrice": 460,
+        "surfaceArea": 16
+    },
+    {
+        "name": "Studio moderne",
+        "rentPrice": 620,
+        "surfaceArea": 24
+    },
+    {
+        "name": "Chambre de charme",
+        "rentPrice": 490,
+        "surfaceArea": 19
+    },
+    {
+        "name": "Chambre moderne",
+        "rentPrice": 790,
+        "surfaceArea": 35
+    },
+    {
+        "name": "Chambre économique",
+        "rentPrice": 360,
+        "surfaceArea": 11
+    },
+    {
+        "name": "Chambre abordable",
+        "rentPrice": 410,
+        "surfaceArea": 14
+    },
+    {
+        "name": "Suite moderne",
+        "rentPrice": 880,
+        "surfaceArea": 41
+    },
+    {
+        "name": "Studio lumineux",
+        "rentPrice": 590,
+        "surfaceArea": 22
+    },
+    {
+        "name": "Chambre cosy",
+        "rentPrice": 550,
+        "surfaceArea": 20
+    },
+    {
+        "name": "Chambre bien équipée",
+        "rentPrice": 800,
+        "surfaceArea": 36
+    },
+    {
+        "name": "Chambre économique",
+        "rentPrice": 350,
+        "surfaceArea": 10
+    },
+    {
+        "name": "Chambre standard",
+        "rentPrice": 440,
+        "surfaceArea": 15
+    },
+    {
+        "name": "Chambre design",
+        "rentPrice": 850,
+        "surfaceArea": 40
+    },
+    {
+        "name": "Chambre de luxe",
+        "rentPrice": 900,
+        "surfaceArea": 48
+    }
+]
