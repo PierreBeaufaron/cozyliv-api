@@ -65,7 +65,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Range(
         min:0,
         max:2,
-        message: 'Le genre est ivalide.'
+        notInRangeMessage: 'Le genre est ivalide.'
     )]
     private ?int $gender = null;
 
