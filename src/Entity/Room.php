@@ -6,6 +6,7 @@ use App\Repository\RoomRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RoomRepository::class)]
 class Room
@@ -15,13 +16,27 @@ class Room
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 80)]
+    #[Assert\NotBlank(message: 'Un nom doit être renseigné.')]
+    #[Assert\Length(
+        min: 3,
+        max: 80,
+        minMessage: 'Le nom de la chambre doit contenir au moins {{ limit }} caractères.',
+        maxMessage: 'Le nom de la chambre ne peut pas dépasser {{ limit }} caractères.'
+    )]
     private ?string $name = null;
 
-    #[ORM\Column]
+    #[ORM\Column(type: 'decimal', precision: 6, scale: 2)]
+    #[Assert\Range(
+        min: 0,
+        max: 9999.99,
+        notInRangeMessage: 'Le prix doit être compris entre {{ min }} et {{ max }}.',
+    )]
     private ?float $rentPrice = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: 'La surface doit être renseignée.')]
+    #[Assert\Positive(message: 'La surface doit être supérieure à 0.')]
     private ?float $surfaceArea = null;
 
     #[ORM\ManyToOne(inversedBy: 'rooms')]

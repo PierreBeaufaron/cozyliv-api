@@ -4,9 +4,12 @@ namespace App\Entity;
 
 use App\Repository\ReviewRepository;
 use Doctrine\DBAL\Types\Types;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
+#[ORM\HasLifecycleCallbacks] 
 class Review
 {
     #[ORM\Id]
@@ -18,10 +21,14 @@ class Review
     private ?int $rating = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[Assert\Length(
+        min: 5,
+        minMessage: 'Le commentaire doit contenir au minimum {{ limit }} caractères.'
+    )]
     private ?string $content = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $date = null;
+    private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(nullable: true)]
     private ?bool $isFavorite = null;
@@ -63,16 +70,22 @@ class Review
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->date;
+        return $this->createdAt;
     }
 
-    public function setDate(?\DateTimeInterface $date): static
+    public function setCreatedAt(?\DateTimeInterface $createdAt): static
     {
-        $this->date = $date;
+        $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new DateTime();
     }
 
     public function isFavorite(): ?bool

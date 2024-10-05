@@ -6,6 +6,8 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use DateTime;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -13,6 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[ORM\HasLifecycleCallbacks]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -21,6 +24,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
+    #[Assert\NotBlank(message: 'L\'adresse email doit être renseignée.')]
+    #[Assert\Email(message: 'L\'adresse email est invalide.')]
     private ?string $email = null;
 
     /**
@@ -35,13 +40,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 80)]
+    #[Assert\NotBlank(message: 'Le prénom doit être renseigné.')]
+    #[Assert\Length(
+        min: 3,
+        max: 80,
+        minMessage: 'Le prénom doit contenir au moins 3 caractères.',
+        maxMessage: 'Le prénom ne doit pas éxcéder 80 caractères.'
+    )]
     private ?string $firstname = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 80)]
+    #[Assert\NotBlank(message: 'Le nom doit être renseigné.')]
+    #[Assert\Length(
+        min: 3,
+        max: 80,
+        minMessage: 'Le nom doit contenir au moins 3 caractères.',
+        maxMessage: 'Le nom ne doit pas éxcéder 80 caractères.'
+    )]
     private ?string $lastname = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Le genre doit être renseigné')]
+    #[Assert\Range(
+        min:0,
+        max:2,
+        message: 'Le genre est ivalide.'
+    )]
     private ?int $gender = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -54,7 +79,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $avatar = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $memberSince = null;
+    private ?\DateTimeInterface $createdAt = null;
 
     /**
      * @var Collection<int, advert>
@@ -248,16 +273,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getMemberSince(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->memberSince;
+        return $this->createdAt;
     }
 
-    public function setMemberSince(\DateTimeInterface $memberSince): static
+    public function setCreatedAt(\DateTimeInterface $createdAt): static
     {
-        $this->memberSince = $memberSince;
+        $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new DateTime();
     }
 
     /**
@@ -432,5 +463,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->updatedAt = $updatedAt;
 
         return $this;
+    }
+
+    #[ORM\PreUpdate]
+    public function setUpdatedAtValue(): void
+    {
+        $this->updatedAt = new DateTime();
     }
 }
