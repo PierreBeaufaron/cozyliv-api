@@ -88,7 +88,7 @@ class AppFixtures extends Fixture
         foreach ($users as $user) {
             $user
                 ->setBirthDate(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-70 years')))
-                ->setMemberSince(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-3 years')))
+                ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-3 years')))
                 ->setPassword($this->hasher->hashPassword($user, $user->getPassword()))
                 ->setCity($faker->randomElement($this->dbCities));
 
