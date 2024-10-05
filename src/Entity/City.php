@@ -6,6 +6,7 @@ use App\Repository\CityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CityRepository::class)]
 class City
@@ -16,6 +17,11 @@ class City
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le nom doit être renseigné.')]
+    #[Assert\Length(
+        max: 100,
+        maxMessage: 'Le nom de la ville ne peut pas dépacer {{ limit }} caractères.'
+    )]
     private ?string $name = null;
 
     /**
@@ -34,8 +40,13 @@ class City
     #[ORM\JoinColumn(nullable: false)]
     private ?Country $country = null;
 
-    #[ORM\Column]
-    private ?int $zipCode = null;
+    #[ORM\Column(type: 'string', length: 10)]
+    #[Assert\NotBlank(message: 'Le code postal doit être renseigné.')]
+    #[Assert\Regex(
+        pattern: '/^[0-9]{5}$/',
+        message: 'Le code postal doit contenir exactement 5 chiffres.'
+    )]
+    private ?string $zipCode = null;
 
     public function __construct()
     {
@@ -132,12 +143,12 @@ class City
         return $this;
     }
 
-    public function getZipCode(): ?int
+    public function getZipCode(): ?string
     {
         return $this->zipCode;
     }
 
-    public function setZipCode(int $zipCode): static
+    public function setZipCode(string $zipCode): static
     {
         $this->zipCode = $zipCode;
 

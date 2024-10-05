@@ -4,9 +4,11 @@ namespace App\Entity;
 
 use App\Repository\BookingRepository;
 use Doctrine\DBAL\Types\Types;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BookingRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Booking
 {
     #[ORM\Id]
@@ -30,6 +32,9 @@ class Booking
     #[ORM\ManyToOne(inversedBy: 'bookings')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $tenant = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?\DateTimeInterface $createdAt = null;
 
     public function getId(): ?int
     {
@@ -94,5 +99,23 @@ class Booking
         $this->tenant = $tenant;
 
         return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new DateTime();
     }
 }

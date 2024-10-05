@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\MessageRepository;
 use Doctrine\DBAL\Types\Types;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
@@ -15,9 +16,10 @@ class Message
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $dateTime = null;
+    private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Advert\NotBlank(message: 'Le message ne peut pas être vide.')]
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'sentMessages')]
@@ -33,16 +35,22 @@ class Message
         return $this->id;
     }
 
-    public function getDateTime(): ?\DateTimeInterface
+    public function getCreatedAt(): ?\DateTimeInterface
     {
-        return $this->dateTime;
+        return $this->createdAt;
     }
 
-    public function setDateTime(\DateTimeInterface $dateTime): static
+    public function setCreatedAt(\DateTimeInterface $createdAt): static
     {
-        $this->dateTime = $dateTime;
+        $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new DateTime();
     }
 
     public function getContent(): ?string

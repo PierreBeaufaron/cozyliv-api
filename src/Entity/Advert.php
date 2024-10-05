@@ -6,9 +6,12 @@ use App\Repository\AdvertRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AdvertRepository::class)]
+#[ORM\HasLifecycleCallbacks]  // Indique que cette entité utilise les callbacks du cycle de vie
 class Advert
 {
     #[ORM\Id]
@@ -17,18 +20,37 @@ class Advert
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le titre doit être renseigné.')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'Le titre ne peut pas dépasser {{ limit }} caractères.'
+    )]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'La description doit être renseignée.')]
+    #[Assert\Length(
+        min: 144,
+        minMessage: 'La description doit contenir au moins {{ limit }} caractères.'
+    )]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'L\'adresse doit être renseignée.')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'L\'adresse ne peut pas dépasser {{ limit }} caractères.'
+    )]
     private ?string $address = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: 'Le nombre de pièces doit être renseigné.')]
+    #[Assert\Positive(message: 'Le nombre de pièces doit être supérieur à zéro.')]
     private ?int $nbRoom = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: 'La surface doit être renseignée.')]
+    #[Assert\Positive(message: 'La surface doit être supérieure à 0.')]
     private ?float $surfaceArea = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
@@ -68,6 +90,9 @@ class Advert
      */
     #[ORM\ManyToMany(targetEntity: Service::class, inversedBy: 'adverts')]
     private Collection $services;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $updatedAt = null;
 
     public function __construct()
     {
@@ -152,6 +177,13 @@ class Advert
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    // Ajoute cette méthode avec le callback PrePersist
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new DateTime(); // Attribue la date actuelle au champ createdAt
     }
 
     public function getRating(): ?float
@@ -303,4 +335,24 @@ class Advert
 
         return $this;
     }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    // Ajout de la méthode pour PreUpdate
+    #[ORM\PreUpdate]
+    public function setUpdatedAtValue(): void
+    {
+        $this->updatedAt = new DateTime(); // Attribue la date actuelle lors de la mise à jour
+    }
+
 }

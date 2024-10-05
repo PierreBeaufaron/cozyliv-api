@@ -1,62 +1,62 @@
 [
     {
-      "zipCode": 75001,
+      "zipCode": "75001",
       "name": "Paris"
     },
     {
-      "zipCode": 69001,
+      "zipCode": "69001",
       "name": "Lyon"
     },
     {
-      "zipCode": 13001,
+      "zipCode": "13001",
       "name": "Marseille"
     },
     {
-      "zipCode": 33000,
+      "zipCode": "33000",
       "name": "Bordeaux"
     },
     {
-      "zipCode": 59000,
+      "zipCode": "59000",
       "name": "Lille"
     },
     {
-      "zipCode": 31000,
+      "zipCode": "31000",
       "name": "Toulouse"
     },
     {
-      "zipCode": 44000,
+      "zipCode": "44000",
       "name": "Nantes"
     },
     {
-      "zipCode": 67000,
+      "zipCode": "67000",
       "name": "Strasbourg"
     },
     {
-      "zipCode": 34000,
+      "zipCode": "34000",
       "name": "Montpellier"
     },
     {
-      "zipCode": 80000,
+      "zipCode": "80000",
       "name": "Amiens"
     },
     {
-      "zipCode": 60000,
+      "zipCode": "06000",
       "name": "Nice"
     },
     {
-      "zipCode": 76000,
+      "zipCode": "76000",
       "name": "Rouen"
     },
     {
-      "zipCode": 45000, 
+      "zipCode": "45000", 
       "name": "Orléans"
     },
     {
-      "zipCode": 21000,
+      "zipCode": "21000",
       "name": "Dijon"
     },
     {
-      "zipCode": 80000,
+      "zipCode": "80000",
       "name": "Amiens"
     }
   ]
