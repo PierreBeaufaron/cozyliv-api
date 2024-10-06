@@ -15,14 +15,15 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: AdvertRepository::class)]
 #[ORM\HasLifecycleCallbacks]  // Indique que cette entité utilise les callbacks du cycle de vie
 #[ApiResource(
-    normalizationContext: ['groups' => ['adverts:read']]
+    normalizationContext: ['groups' => ['adverts:read']],
+    denormalizationContext: ['groups' => ['adverts:write']]
   )]
 class Advert
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['adverts:read'])]
+    #[Groups(['adverts:read', 'users:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -31,7 +32,7 @@ class Advert
         max: 255,
         maxMessage: 'Le titre ne peut pas dépasser {{ limit }} caractères.'
     )]
-    #[Groups(['adverts:read', 'adverts:write'])]
+    #[Groups(['adverts:read', 'adverts:write', 'users:read'])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -86,7 +87,7 @@ class Advert
 
     #[ORM\ManyToOne(inversedBy: 'adverts')]
     #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['adverts:read', 'adverts:write'])]
+    #[Groups(['adverts:read', 'adverts:write', 'users:read'])]
     private ?City $city = null;
 
     /**
@@ -107,10 +108,11 @@ class Advert
      * @var Collection<int, Service>
      */
     #[ORM\ManyToMany(targetEntity: Service::class, inversedBy: 'adverts')]
+    #[Groups(['adverts:read', 'adverts:write'])]
     private Collection $services;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    #[Groups(['adverts:read', 'adverts:write'])]
+    #[Groups(['adverts:read'])]
     private ?\DateTimeInterface $updatedAt = null;
 
     public function __construct()

@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AdvertImgRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: AdvertImgRepository::class)]
 class AdvertImg
@@ -14,9 +15,11 @@ class AdvertImg
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['adverts:read'])]
     private ?string $url = null;
 
     #[ORM\Column]
+    #[Groups(['adverts:read'])]
     private ?bool $coverImg = null;
 
     #[ORM\ManyToOne(inversedBy: 'advertImgs')]

@@ -6,6 +6,7 @@ use App\Repository\RoomRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RoomRepository::class)]
@@ -14,6 +15,7 @@ class Room
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['adverts:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 80)]
@@ -24,6 +26,7 @@ class Room
         minMessage: 'Le nom de la chambre doit contenir au moins {{ limit }} caractères.',
         maxMessage: 'Le nom de la chambre ne peut pas dépasser {{ limit }} caractères.'
     )]
+    #[Groups(['adverts:read'])]
     private ?string $name = null;
 
     #[ORM\Column(type: 'decimal', precision: 6, scale: 2)]
@@ -32,6 +35,7 @@ class Room
         max: 9999.99,
         notInRangeMessage: 'Le prix doit être compris entre {{ min }} et {{ max }}.',
     )]
+    #[Groups(['adverts:read'])]
     private ?float $rentPrice = null;
 
     #[ORM\Column]

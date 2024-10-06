@@ -6,6 +6,7 @@ use App\Repository\CityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CityRepository::class)]
@@ -14,6 +15,7 @@ class City
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['adverts:read', 'adverts:write', 'users:read', 'users:write'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -21,7 +23,8 @@ class City
     #[Assert\Length(
         max: 100,
         maxMessage: 'Le nom de la ville ne peut pas dépacer {{ limit }} caractères.'
-    )]
+    )]  
+    #[Groups(['adverts:read', 'adverts:write', 'users:read', 'users:write'])]
     private ?string $name = null;
 
     /**
@@ -45,7 +48,8 @@ class City
     #[Assert\Regex(
         pattern: '/^[0-9]{5}$/',
         message: 'Le code postal doit contenir exactement 5 chiffres.'
-    )]
+    )] 
+    #[Groups(['adverts:read', 'adverts:write', 'users:read', 'users:write'])]
     private ?string $zipCode = null;
 
     public function __construct()

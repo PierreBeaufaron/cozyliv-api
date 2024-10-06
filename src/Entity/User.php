@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use DateTime;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -16,28 +18,36 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[ORM\HasLifecycleCallbacks]
+#[ApiResource(
+    normalizationContext: ['groups' => ['users:read']],
+    denormalizationContext: ['groups' => ['users:write']]
+  )]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['users:read', 'adverts:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
     #[Assert\NotBlank(message: 'L\'adresse email doit être renseignée.')]
     #[Assert\Email(message: 'L\'adresse email est invalide.')]
+    #[Groups(['users:read', 'users:write', 'adverts:read'])]
     private ?string $email = null;
 
     /**
      * @var list<string> The user roles
      */
     #[ORM\Column]
+    #[Groups(['users:read', 'users:write'])]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Groups(['users:read', 'users:write'])]
     private ?string $password = null;
 
     #[ORM\Column(length: 80)]
@@ -48,6 +58,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         minMessage: 'Le prénom doit contenir au moins 3 caractères.',
         maxMessage: 'Le prénom ne doit pas éxcéder 80 caractères.'
     )]
+    #[Groups(['users:read', 'users:write', 'adverts:read'])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 80)]
@@ -58,6 +69,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         minMessage: 'Le nom doit contenir au moins 3 caractères.',
         maxMessage: 'Le nom ne doit pas éxcéder 80 caractères.'
     )]
+    #[Groups(['users:read', 'users:write', 'adverts:read'])]
     private ?string $lastname = null;
 
     #[ORM\Column]
@@ -67,33 +79,41 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         max:2,
         notInRangeMessage: 'Le genre est ivalide.'
     )]
+    #[Groups(['users:read', 'users:write', 'adverts:read'])]
     private ?int $gender = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['users:read', 'users:write'])]
     private ?\DateTimeInterface $birthDate = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['users:read', 'users:write'])]
     private ?string $address = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(['users:read', 'users:write'])]
     private ?string $avatar = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['users:read'])]
     private ?\DateTimeInterface $createdAt = null;
 
     /**
-     * @var Collection<int, advert>
+     * @var Collection<int, Advert>
      */
-    #[ORM\OneToMany(targetEntity: advert::class, mappedBy: 'owner', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Advert::class, mappedBy: 'owner', orphanRemoval: true)]
+    #[Groups(['users:read'])]
     private Collection $adverts;
 
-    #[ORM\ManyToOne(inversedBy: 'users')]
+    #[ORM\ManyToOne(targetEntity: City::class, cascade: ['persist'], inversedBy: 'users')]
+    #[Groups(['users:read', 'users:write'])]
     private ?City $city = null;
 
     /**
      * @var Collection<int, Booking>
      */
     #[ORM\OneToMany(targetEntity: Booking::class, mappedBy: 'tenant', orphanRemoval: true)]
+    #[Groups(['users:read'])]
     private Collection $bookings;
 
     /**
@@ -115,6 +135,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $receivedMessages;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(['users:read'])]
     private ?\DateTimeInterface $updatedAt = null;
 
     public function __construct()

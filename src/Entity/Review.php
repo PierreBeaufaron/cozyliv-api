@@ -6,6 +6,7 @@ use App\Repository\ReviewRepository;
 use Doctrine\DBAL\Types\Types;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
@@ -15,9 +16,11 @@ class Review
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['adverts:read'])]
     private ?int $id = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['adverts:read'])]
     private ?int $rating = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -25,16 +28,20 @@ class Review
         min: 5,
         minMessage: 'Le commentaire doit contenir au minimum {{ limit }} caractères.'
     )]
+    #[Groups(['adverts:read'])]
     private ?string $content = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Groups(['adverts:read'])]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['adverts:read'])]
     private ?bool $isFavorite = null;
 
     #[ORM\ManyToOne(inversedBy: 'reviews')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['adverts:read'])]
     private ?User $tenant = null;
 
     #[ORM\ManyToOne(inversedBy: 'reviews')]
