@@ -9,16 +9,20 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AdvertRepository::class)]
 #[ORM\HasLifecycleCallbacks]  // Indique que cette entité utilise les callbacks du cycle de vie
-#[ApiResource]
+#[ApiResource(
+    normalizationContext: ['groups' => ['adverts:read']]
+  )]
 class Advert
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['adverts:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -27,6 +31,7 @@ class Advert
         max: 255,
         maxMessage: 'Le titre ne peut pas dépasser {{ limit }} caractères.'
     )]
+    #[Groups(['adverts:read', 'adverts:write'])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
@@ -35,6 +40,7 @@ class Advert
         min: 144,
         minMessage: 'La description doit contenir au moins {{ limit }} caractères.'
     )]
+    #[Groups(['adverts:read', 'adverts:write'])]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
@@ -43,48 +49,58 @@ class Advert
         max: 255,
         maxMessage: 'L\'adresse ne peut pas dépasser {{ limit }} caractères.'
     )]
+    #[Groups(['adverts:read', 'adverts:write'])]
     private ?string $address = null;
 
     #[ORM\Column]
     #[Assert\NotNull(message: 'Le nombre de pièces doit être renseigné.')]
     #[Assert\Positive(message: 'Le nombre de pièces doit être supérieur à zéro.')]
+    #[Groups(['adverts:read', 'adverts:write'])]
     private ?int $nbRoom = null;
 
     #[ORM\Column]
     #[Assert\NotNull(message: 'La surface doit être renseignée.')]
     #[Assert\Positive(message: 'La surface doit être supérieure à 0.')]
+    #[Groups(['adverts:read', 'adverts:write'])]
     private ?float $surfaceArea = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['adverts:read'])]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(nullable: true)]
+    #[Groups(['adverts:read'])]
     private ?float $rating = null;
 
     /**
      * @var Collection<int, Room>
      */
     #[ORM\OneToMany(targetEntity: Room::class, mappedBy: 'advert', orphanRemoval: true)]
+    #[Groups(['adverts:read'])]
     private Collection $rooms;
 
     #[ORM\ManyToOne(inversedBy: 'adverts')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['adverts:read', 'adverts:write'])]
     private ?User $owner = null;
 
     #[ORM\ManyToOne(inversedBy: 'adverts')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['adverts:read', 'adverts:write'])]
     private ?City $city = null;
 
     /**
      * @var Collection<int, AdvertImg>
      */
     #[ORM\OneToMany(targetEntity: AdvertImg::class, mappedBy: 'advert', orphanRemoval: true)]
+    #[Groups(['adverts:read', 'adverts:write'])]
     private Collection $advertImgs;
 
     /**
      * @var Collection<int, Review>
      */
     #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'advert', orphanRemoval: true)]
+    #[Groups(['adverts:read'])]
     private Collection $reviews;
 
     /**
@@ -94,6 +110,7 @@ class Advert
     private Collection $services;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[Groups(['adverts:read', 'adverts:write'])]
     private ?\DateTimeInterface $updatedAt = null;
 
     public function __construct()
