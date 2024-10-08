@@ -23,6 +23,7 @@ final class JwtCreatedListener
         }
 
         // Ajouter le prénom et nom
+        $data['id'] = $user->getId();
         $data['firstname'] = $user->getFirstname();
         $data['lastname'] = $user->getLastname();
 
