@@ -2,7 +2,7 @@
     {
       "email": "alex.machin@example.com",
       "roles": ["ROLE_ADMIN"],
-      "password": "Alex123",
+      "password": "Alex12356",
       "firstname": "Alex",
       "lastname": "Machin",
       "gender": 1,
