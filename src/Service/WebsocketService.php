@@ -31,125 +31,169 @@ class WebsocketService implements MessageComponentInterface
         $this->clients = new \SplObjectStorage();
     }
 
-    public function onOpen(ConnectionInterface $conn)
+    public function onOpen(ConnectionInterface $from)
     {
         // Ajoute la nouvelle connexion à la collection de clients.
-        $this->clients->attach($conn);
+        $this->clients->attach($from);
     }
 
     public function onMessage(ConnectionInterface $from, $msg)
     {
-        $data = json_decode($msg, true);
-        echo("Data: $data");
-        echo("Message: $msg");
 
-        // if (!$data) {
-        //     $from->send(json_encode(['error' => 'Invalid message format']));
-        //     return;
-        // }
-
-        // if (isset($data['type']) && $data['type'] === 'auth') {
-        //     // Handle authentication
-        //     $this->authenticate($from, $data['token']);
-        //     return;
-        // }
-
-        // // Check if the user is authenticated
-        // if (!isset($this->clients[$from]['user'])) {
-        //     $from->send(json_encode(['error' => 'Unauthorized']));
-        //     return;
-        // }
-
-        // Gérer le message entrant
-        // $this->handleChatMessage($from, $data);
-    }
-
-    // private function authenticate(ConnectionInterface $conn, string $token): void
-    // {
-    //     try {
-    //         // Decode the JWT token to get the payload
-    //         $payload = $this->jwtEncoder->decode($token);
-    //         $email = $payload['username'] ?? null;
-
-    //         if (!$email) {
-    //             $conn->send(json_encode(['error' => 'Invalid token payload']));
-    //             $conn->close();
-    //             return;
-    //         }
-
-    //         // Retrieve the user from the database
-    //         $user = $this->userRepository->findOneBy(['email' => $email]);
-
-    //         if (!$user) {
-    //             $conn->send(json_encode(['error' => 'User not found']));
-    //             $conn->close();
-    //             return;
-    //         }
-
-    //         // Store the user in the clients storage associated with the connection
-    //         $this->clients[$conn] = ['user' => $user];
-
-    //         $conn->send(json_encode(['success' => 'Authenticated']));
-    //     } catch (\Exception $e) {
-    //         $conn->send(json_encode(['error' => 'Authentication failed']));
-    //         $conn->close();
-    //     }
-    // }
-
-    private function handleChatMessage(ConnectionInterface $from, array $data): void
-    {
-        if (!isset($data['content'], $data['receiver_id'])) {
-            $from->send(json_encode(['error' => 'Invalid message data']));
+        $msg = json_decode($msg, true);
+        if(!isset($msg['type'])) {
+            $from->send(json_encode([
+                'type' => 'error',
+                'data' => 'Key \'type\' is required'
+            ]));
             return;
         }
 
-        // Retrouve l'expéditeur dans la collection de clients.
-        $sender = $this->clients[$from]['user'];
+        if ($msg['type'] === 'authentication') {
+            $this->handleAuthentication($from, $msg['data']);
+            return;
+        }
+
+        // Vérifier que le user est authentifié
+        if (!isset($this->clients[$from]['user'])) {
+            $from->send(json_encode([
+                'type' => 'error',
+                'data' => 'Unauthorized'
+
+            ]));
+            return;
+        }
+
+
+        if ($msg['type'] === 'conversation.message.created') {
+            // Récup de l'expéditeur et du contenu
+            $this->handleChatMessage($from, $msg['data']);
+            return;
+        }
+
+    }
+
+    private function handleAuthentication(ConnectionInterface $from, string $token): void
+    {
+        try {
+            // Decoder le JWT
+            $payload = $this->jwtEncoder->decode($token);
+            $email = $payload['username'] ?? null; // Adapter le nom de la clé si nécessaire
+
+            if (!$email) {
+                $from->send(json_encode([
+                    'type' => 'error',
+                    'data' => 'Invalid token payload'
+    
+                ]));
+    
+                $from->close();
+                return;
+            }
+
+            // Retrouver le user dans la BDD
+            $user = $this->userRepository->findOneBy(['email' => $email]);
+
+            if (!$user) {
+                $from->send(json_encode([
+                    'type' => 'error',
+                    'data' => 'User not found'
+    
+                ]));
+    
+                $from->close();
+                return;
+            }
+            // Stocker le user avec sa connexion 
+            $this->clients[$from] = ['user' => $user];
+
+        } catch (\Exception $e) {
+            $from->send(json_encode([
+                'type' => 'error',
+                'data' => 'Authentication failed'
+
+            ]));
+            $from->close();
+        }
+    }
+
+    // Gestion des message
+    private function handleChatMessage(ConnectionInterface $from, array $data): void
+    {
+        if (!isset($data['content'], $data['recipientId'], $data['senderId'])) {
+            $from->send(json_encode([
+                'type' => 'error',
+                'data' => 'Invalid message data'
+
+            ]));
+            return;
+        }
 
         // Créer une nouvelle instance de message
         $message = new Message();
         $message->setContent($data['content']);
         $message->setCreatedAt(new \DateTimeImmutable());
+
+        // Retrouve l'expéditeur dans la collection de clients.
+        $sender = $this->userRepository->find($data['senderId']);
+        if (!$sender) {
+            $from->send(json_encode([
+                'type' => 'error',
+                'data' => 'Sender not found'
+            ]));
+            return;
+
+        }
+
         $message->setSender($sender);
 
         // Trouver le destinataire
-        $recipient = $this->userRepository->find($data['receiver_id']);
+        $recipient = $this->userRepository->find($data['recipientId']);
         if (!$recipient) {
-            $from->send(json_encode(['error' => 'Receiver not found']));
+            $from->send(json_encode([
+                'type' => 'error',
+                'data' => 'Receiver not found'
+            ]));
             return;
         }
 
         $message->setRecipient($recipient);
-
-        // Persist the message to the database
+        
+        // Persister les message dans la BDD
         $this->entityManager->persist($message);
         $this->entityManager->flush();
 
-        // Serialize the message for sending
+        // Serialiser le message pour l'envoyer
         $serializedMessage = $this->serializer->serialize($message, 'json', ['groups' => ['messages:read']]);
-
-        // Send the message to the receiver if connected
+        
+        // Envoyer le message si le destinataire est connecté
         foreach ($this->clients as $client) {
             $clientUser = $this->clients[$client]['user'] ?? null;
             if ($clientUser && $clientUser->getId() === $recipient->getId()) {
-                $client->send($serializedMessage);
+                $client->send(json_encode([
+                    'type' => 'conversation.message.added', 
+                    'data' => $serializedMessage
+                ]));        
             }
         }
 
-        // Optionally, acknowledge message sent to the sender
-        $from->send(json_encode(['success' => 'Message sent']));
+        // Optionnel,message de reconnaissance envoyé à l'expéditeur
+        $from->send(json_encode([
+            'type' => 'conversation.message.added', 
+            'data' => $serializedMessage
+        ]));
     }
 
-    public function onClose(ConnectionInterface $conn)
+    public function onClose(ConnectionInterface $from)
     {
-        // Remove the connection from the clients storage
-        $this->clients->detach($conn);
+        // Supprimer la connexion du local storage
+        $this->clients->detach($from);
     }
 
-    public function onError(ConnectionInterface $conn, \Exception $e)
+    public function onError(ConnectionInterface $from, \Exception $e)
     {
-        // Close the connection on error
-        $conn->close();
+        // Fermer la connexion si erreur
+        $from->close();
     }
 
 }

@@ -6,6 +6,8 @@ use App\Repository\CountryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CountryRepository::class)]
 class Country
@@ -13,9 +15,17 @@ class Country
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['adverts:read', 'users:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le nom du pays doit être renseigné.')]
+    #[Assert\Length(
+        max: 100,
+        maxMessage: 'Le nom du pays ne peut pas dépacer {{ limit }} caractères.'
+    )]  
+    #[Groups(['adverts:read', 'adverts:write', 'users:read', 'users:write'])]
+
     private ?string $name = null;
 
     /**

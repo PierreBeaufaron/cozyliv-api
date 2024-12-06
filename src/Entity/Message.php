@@ -2,33 +2,44 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\MessageRepository;
 use Doctrine\DBAL\Types\Types;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MessageRepository::class)]
+#[ApiResource(
+    normalizationContext: ['groups' => ['messages:read']],
+    denormalizationContext: ['groups' => ['messages:write']]
+  )]
 class Message
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['messages:read'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['messages:read'])]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank(message: 'Le message ne peut pas être vide.')]
+    #[Groups(['messages:read'])]
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'sentMessages')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['messages:read'])]
     private ?User $sender = null;
 
     #[ORM\ManyToOne(inversedBy: 'receivedMessages')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['messages:read'])]
     private ?User $recipient = null;
 
     public function getId(): ?int

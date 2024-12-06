@@ -15,11 +15,11 @@ class City
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['adverts:read', 'adverts:write', 'users:read', 'users:write'])]
+    #[Groups(['adverts:read', 'users:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: 'Le nom doit être renseigné.')]
+    #[Assert\NotBlank(message: 'Le nom de la ville doit être renseigné.')]
     #[Assert\Length(
         max: 100,
         maxMessage: 'Le nom de la ville ne peut pas dépacer {{ limit }} caractères.'
@@ -39,15 +39,16 @@ class City
     #[ORM\OneToMany(targetEntity: Advert::class, mappedBy: 'city', orphanRemoval: true)]
     private Collection $adverts;
 
-    #[ORM\ManyToOne(inversedBy: 'cities')]
+    #[ORM\ManyToOne(targetEntity: Country::class, inversedBy: 'cities', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['adverts:read', 'adverts:write', 'users:read', 'users:write'])]
     private ?Country $country = null;
 
     #[ORM\Column(type: 'string', length: 10)]
     #[Assert\NotBlank(message: 'Le code postal doit être renseigné.')]
     #[Assert\Regex(
-        pattern: '/^[0-9]{5}$/',
-        message: 'Le code postal doit contenir exactement 5 chiffres.'
+        pattern: '/^[A-Za-z0-9\- ]{2,10}$/',
+        message: 'Le format du code postal est incorrect.'
     )] 
     #[Groups(['adverts:read', 'adverts:write', 'users:read', 'users:write'])]
     private ?string $zipCode = null;

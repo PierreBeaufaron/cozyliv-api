@@ -37,7 +37,7 @@ class AppFixtures extends Fixture
         
         $faker = Factory::create('fr_FR');
 
-        // Appelle des autres fonctions dans le bon ordre
+        // Call others function in order
         $this->loadCountries($manager);
         $this->loadCities($manager);
         $this->loadUsers($manager, $faker);
@@ -48,9 +48,9 @@ class AppFixtures extends Fixture
         $manager->flush();
     }
 
+    // Countries
     private function loadCountries(ObjectManager $manager): void
     {
-        // Countries
         $rawCountries = file(__DIR__ . '/countries.txt');
         $countries = array_map(fn (string $c) => trim($c), $rawCountries);
 
@@ -63,9 +63,9 @@ class AppFixtures extends Fixture
         }
     }
 
+    // Cities
     private function loadCities(ObjectManager $manager): void
     {
-        // Cities
         $rawCitiesContent = file_get_contents(__DIR__ . '/cities.json');
         /** @var City[] $cities */
         $cities = $this->serializer->deserialize($rawCitiesContent, City::class . '[]', 'json');
@@ -78,9 +78,9 @@ class AppFixtures extends Fixture
         }
     }
 
+    // Users
     public function loadUsers(ObjectManager $manager, Generator $faker): void
     {
-        // Users
         $rawUserContent = file_get_contents(__DIR__ . '/users.json');
         /** @var User[] $users */
         $users = $this->serializer->deserialize($rawUserContent, User::class . '[]', 'json');
@@ -99,12 +99,11 @@ class AppFixtures extends Fixture
                     $this->dbOwners[] = $user;
                 }             
         }    
-        // dd($this->dbOwners);
     }
 
+    // Services
     public function loadServices(ObjectManager $manager): void
     {
-        // Services
         $rawServiceContent = file_get_contents(__DIR__ . '/services.json');
         /** @var Service[] $services */
         $services = $this->serializer->deserialize($rawServiceContent, Service::class . '[]', 'json');
@@ -118,13 +117,11 @@ class AppFixtures extends Fixture
                     $this->dbRoomServices[] = $service;
                 }
         }    
-        // dump($this->dbAdvertServices);
-        // dd($this->dbRoomServices);
     }
 
+    // Adverts
     public function loadAdverts(ObjectManager $manager, Generator $faker): void
     {
-        // Adverts
         $rawAdvertContent = file_get_contents(__DIR__ . '/adverts.json');
         /** @var Advert[] $adverts */
         $adverts = $this->serializer->deserialize($rawAdvertContent, Advert::class . '[]', 'json');
@@ -149,9 +146,9 @@ class AppFixtures extends Fixture
         }
     }
 
+    // Rooms
     public function loadRooms(ObjectManager $manager, Generator $faker): void
     {
-        // Rooms
         $rawRoomContent = file_get_contents(__DIR__ . '/rooms.json');
         /** @var Room[] $rooms */
         $rooms = $this->serializer->deserialize($rawRoomContent, Room::class . '[]', 'json');
@@ -169,9 +166,9 @@ class AppFixtures extends Fixture
         }
     }
 
+    // AdvertImg
     public function loadAdvertImg(ObjectManager $manager): void
     {
-        // AdvertImg
         $rawAdvertImgContent = file_get_contents(__DIR__ . '/advertImg.json');
         /** @var AdvertImg[] $advertImgs */
         $advertImgs = $this->serializer->deserialize($rawAdvertImgContent, AdvertImg::class . '[]', 'json');
