@@ -6,7 +6,7 @@ use App\Entity\User;
 use Lexik\Bundle\JWTAuthenticationBundle\Event\JWTCreatedEvent;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
-final class JwtCreatedListener
+final class JWTCreatedListener
 {
     #[AsEventListener(event: 'JWTCreated')]
     // Écoute l'événement JWTCreated pour ajouter des propriétés au token.

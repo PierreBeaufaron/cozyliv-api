@@ -6,7 +6,6 @@
       "firstname": "Alex",
       "lastname": "Machin",
       "gender": 1,
-      "address": "15 Avenue Maurice Thorez",
       "avatar": "avatar0.jpg"
     },
     {
@@ -16,7 +15,6 @@
       "firstname": "Jean",
       "lastname": "Durand",
       "gender": 1,
-      "address": "15 Rue de la Paix",
       "avatar": "avatar1.jpg"
     },
     {
@@ -26,7 +24,6 @@
       "firstname": "Sophie",
       "lastname": "Martin",
       "gender": 2,
-      "address": "22 Avenue des Champs-Élysées",
       "avatar": "avatar2.jpg"
     },
     {
@@ -36,7 +33,6 @@
       "firstname": "Pierre",
       "lastname": "Lemoine",
       "gender": 1,
-      "address": "3 Allée des Tilleuls",
       "avatar": "avatar3.jpg"
     },
     {
@@ -46,7 +42,6 @@
       "firstname": "Lucie",
       "lastname": "Bernard",
       "gender": 2,
-      "address": "8 Rue des Acacias",
       "avatar": "avatar4.jpg"
     },
     {
@@ -56,7 +51,6 @@
       "firstname": "Antoine",
       "lastname": "Moreau",
       "gender": 1,
-      "address": "12 Avenue Victor Hugo",
       "avatar": "avatar5.jpg"
     },
     {
@@ -66,7 +60,6 @@
       "firstname": "Marie",
       "lastname": "Dufour",
       "gender": 2,
-      "address": "18 Rue de la République",
       "avatar": "avatar6.jpg"
     },
     {
@@ -76,7 +69,6 @@
       "firstname": "Thomas",
       "lastname": "Dupont",
       "gender": 1,
-      "address": "6 Rue de la Liberté",
       "avatar": "avatar7.jpg"
     },
     {
@@ -86,7 +78,6 @@
       "firstname": "Camille",
       "lastname": "Lefevre",
       "gender": 3,
-      "address": "23 Rue des Lilas",
       "avatar": "avatar8.jpg"
     },
     {
@@ -96,7 +87,6 @@
       "firstname": "Louis",
       "lastname": "Perrin",
       "gender": 1,
-      "address": "10 Allée des Marronniers",
       "avatar": "avatar9.jpg"
     },
     {
@@ -106,7 +96,6 @@
       "firstname": "Elodie",
       "lastname": "Fournier",
       "gender": 2,
-      "address": "14 Rue Georges Sand",
       "avatar": "avatar10.jpg"
     }
   ]

@@ -29,14 +29,14 @@ class Room
     #[Groups(['adverts:read'])]
     private ?string $name = null;
 
-    #[ORM\Column(type: 'decimal', precision: 6, scale: 2)]
+    #[ORM\Column(type: 'integer')]
     #[Assert\Range(
         min: 0,
-        max: 9999.99,
+        max: 9999,
         notInRangeMessage: 'Le prix doit être compris entre {{ min }} et {{ max }}.',
     )]
     #[Groups(['adverts:read'])]
-    private ?float $rentPrice = null;
+    private ?int $rentPrice = null;
 
     #[ORM\Column]
     #[Assert\NotNull(message: 'La surface doit être renseignée.')]
@@ -82,12 +82,12 @@ class Room
         return $this;
     }
 
-    public function getRentPrice(): ?float
+    public function getRentPrice(): ?int
     {
         return $this->rentPrice;
     }
 
-    public function setRentPrice(float $rentPrice): static
+    public function setRentPrice(int $rentPrice): static
     {
         $this->rentPrice = $rentPrice;
 

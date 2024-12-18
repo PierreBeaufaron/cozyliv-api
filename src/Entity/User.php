@@ -3,6 +3,11 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -22,6 +27,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
     normalizationContext: ['groups' => ['users:read']],
     denormalizationContext: ['groups' => ['users:write']]
   )]
+#[Get(security: "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and object == user)")]
+#[GetCollection(security: "is_granted('ROLE_ADMIN')")]
+#[Post]
+#[Patch(security: "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and object == user)")]
+#[Delete(security: "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and object == user)")]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -76,7 +86,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank(message: 'Le genre doit être renseigné')]
     #[Assert\Range(
         min:0,
-        max:2,
+        max:3,
         notInRangeMessage: 'Le genre est ivalide.'
     )]
     #[Groups(['users:read', 'users:write', 'adverts:read'])]
@@ -85,10 +95,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Groups(['users:read', 'users:write'])]
     private ?\DateTimeInterface $birthDate = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['users:read', 'users:write'])]
-    private ?string $address = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Groups(['users:read', 'users:write'])]
@@ -104,10 +110,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Advert::class, mappedBy: 'owner', orphanRemoval: true)]
     #[Groups(['users:read'])]
     private Collection $adverts;
-
-    #[ORM\ManyToOne(targetEntity: City::class, cascade: ['persist'], inversedBy: 'users')]
-    #[Groups(['users:read', 'users:write'])]
-    private ?City $city = null;
 
     /**
      * @var Collection<int, Booking>
@@ -270,17 +272,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getAddress(): ?string
-    {
-        return $this->address;
-    }
-
-    public function setAddress(?string $address): static
-    {
-        $this->address = $address;
-
-        return $this;
-    }
 
     public function getAvatar(): ?string
     {
@@ -312,6 +303,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->createdAt = new DateTime();
     }
 
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    #[ORM\PreUpdate]
+    public function setUpdatedAtValue(): void
+    {
+        $this->updatedAt = new DateTime();
+    }
+
     /**
      * @return Collection<int, advert>
      */
@@ -338,18 +347,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $advert->setOwner(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getCity(): ?City
-    {
-        return $this->city;
-    }
-
-    public function setCity(?City $city): static
-    {
-        $this->city = $city;
 
         return $this;
     }
@@ -474,21 +471,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    #[ORM\PreUpdate]
-    public function setUpdatedAtValue(): void
-    {
-        $this->updatedAt = new DateTime();
-    }
 }

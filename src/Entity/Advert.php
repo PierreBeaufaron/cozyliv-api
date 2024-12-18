@@ -3,6 +3,11 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\AdvertRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -13,10 +18,17 @@ use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AdvertRepository::class)]
-#[ORM\HasLifecycleCallbacks]  // Indique que cette entité utilise les callbacks du cycle de vie
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource(
     normalizationContext: ['groups' => ['adverts:read']],
-    denormalizationContext: ['groups' => ['adverts:write']]
+    denormalizationContext: ['groups' => ['adverts:write']],
+    operations: [
+        new GetCollection(),
+        new Get(),
+        new Post(security: "is_granted('ROLE_OWNER')"), 
+        new Patch(security: "is_granted('ROLE_OWNER')"),
+        new Delete(security: "is_granted('ROLE_OWNER')"),
+    ]
   )]
 class Advert
 {
@@ -53,6 +65,33 @@ class Advert
     #[Groups(['adverts:read', 'adverts:write'])]
     private ?string $address = null;
 
+    #[ORM\Column(type: 'string', length: 10)]
+    #[Assert\NotBlank(message: 'Le code postal doit être renseigné.')]
+    #[Assert\Regex(
+        pattern: '/^[A-Za-z0-9\- ]{2,10}$/',
+        message: 'Le format du code postal est incorrect.'
+    )] 
+    #[Groups(['adverts:read', 'adverts:write', 'users:read', 'users:write'])]
+    private ?string $zipCode = null;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'La ville doit être renseigné.')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'La ville ne peut pas dépasser {{ limit }} caractères.'
+    )]
+    #[Groups(['adverts:read', 'adverts:write', 'users:read'])]
+    private ?string $city = null;
+
+    #[ORM\Column(type: 'string', length: 255)]
+    #[Assert\NotBlank(message: 'Le pays doit être renseigné.')]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: 'Le pays ne peut pas dépasser {{ limit }} caractères.'
+    )]
+    #[Groups(['adverts:read', 'adverts:write', 'users:read'])]
+    private ?string $country = null;
+
     #[ORM\Column]
     #[Assert\NotNull(message: 'Le nombre de pièces doit être renseigné.')]
     #[Assert\Positive(message: 'Le nombre de pièces doit être supérieur à zéro.')]
@@ -85,15 +124,11 @@ class Advert
     #[Groups(['adverts:read', 'adverts:write'])]
     private ?User $owner = null;
 
-    #[ORM\ManyToOne(inversedBy: 'adverts')]
-    #[ORM\JoinColumn(nullable: false)]
-    #[Groups(['adverts:read', 'adverts:write', 'users:read'])]
-    private ?City $city = null;
 
     /**
      * @var Collection<int, AdvertImg>
      */
-    #[ORM\OneToMany(targetEntity: AdvertImg::class, mappedBy: 'advert', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: AdvertImg::class, cascade: ['persist', 'remove'], mappedBy: 'advert', orphanRemoval: true)]
     #[Groups(['adverts:read', 'adverts:write'])]
     private Collection $advertImgs;
 
@@ -107,7 +142,7 @@ class Advert
     /**
      * @var Collection<int, Service>
      */
-    #[ORM\ManyToMany(targetEntity: Service::class, inversedBy: 'adverts')]
+    #[ORM\ManyToMany(targetEntity: Service::class, inversedBy: 'adverts', cascade: ['persist'])]
     #[Groups(['adverts:read', 'adverts:write'])]
     private Collection $services;
 
@@ -164,6 +199,42 @@ class Advert
         return $this;
     }
 
+    public function getZipCode(): ?string
+    {
+        return $this->zipCode;
+    }
+
+    public function setZipCode(string $zipCode): static
+    {
+        $this->zipCode = $zipCode;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): static
+    {
+        $this->city = $city;
+
+        return $this;
+    }
+
+    public function getCountry(): ?string
+    {
+        return $this->country;
+    }
+
+    public function setCountry(string $country): static
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
     public function getNbRoom(): ?int
     {
         return $this->nbRoom;
@@ -200,11 +271,30 @@ class Advert
         return $this;
     }
 
-    // Ajoute cette méthode avec le callback PrePersist
+    // Callback PrePersist
     #[ORM\PrePersist]
     public function setCreatedAtValue(): void
     {
-        $this->createdAt = new DateTime(); // Attribue la date actuelle au champ createdAt
+        $this->createdAt = new DateTime();
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    // Callback PreUpdate
+    #[ORM\PreUpdate]
+    public function setUpdatedAtValue(): void
+    {
+        $this->updatedAt = new DateTime();
     }
 
     public function getRating(): ?float
@@ -257,18 +347,6 @@ class Advert
     public function setOwner(?User $owner): static
     {
         $this->owner = $owner;
-
-        return $this;
-    }
-
-    public function getCity(): ?City
-    {
-        return $this->city;
-    }
-
-    public function setCity(?City $city): static
-    {
-        $this->city = $city;
 
         return $this;
     }
@@ -355,25 +433,6 @@ class Advert
         $this->services->removeElement($service);
 
         return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    // Ajout de la méthode pour PreUpdate
-    #[ORM\PreUpdate]
-    public function setUpdatedAtValue(): void
-    {
-        $this->updatedAt = new DateTime(); // Attribue la date actuelle lors de la mise à jour
     }
 
 }

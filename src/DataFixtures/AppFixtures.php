@@ -18,8 +18,6 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class AppFixtures extends Fixture
 {
-    private array $dbCountries = [];
-    private array $dbCities = [];
     private array $dbUsers = [];
     private array $dbOwners = [];
     private array $dbServices = [];
@@ -38,44 +36,12 @@ class AppFixtures extends Fixture
         $faker = Factory::create('fr_FR');
 
         // Call others function in order
-        $this->loadCountries($manager);
-        $this->loadCities($manager);
         $this->loadUsers($manager, $faker);
         $this->loadServices($manager);
         $this->loadAdverts($manager, $faker);
         $this->loadRooms($manager, $faker);
         $this->loadAdvertImg($manager);
         $manager->flush();
-    }
-
-    // Countries
-    private function loadCountries(ObjectManager $manager): void
-    {
-        $rawCountries = file(__DIR__ . '/countries.txt');
-        $countries = array_map(fn (string $c) => trim($c), $rawCountries);
-
-        foreach ($countries as $countryName) {
-            $country = new Country();
-            $country->setName($countryName);
-
-            $manager->persist($country);
-            $this->dbCountries[] = $country;
-        }
-    }
-
-    // Cities
-    private function loadCities(ObjectManager $manager): void
-    {
-        $rawCitiesContent = file_get_contents(__DIR__ . '/cities.json');
-        /** @var City[] $cities */
-        $cities = $this->serializer->deserialize($rawCitiesContent, City::class . '[]', 'json');
-
-        foreach ($cities as $city) {
-            $city->setCountry($this->dbCountries[7]);
-
-            $manager->persist($city);
-            $this->dbCities[] = $city;
-        }
     }
 
     // Users
@@ -89,8 +55,7 @@ class AppFixtures extends Fixture
             $user
                 ->setBirthDate(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-70 years')))
                 ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-3 years')))
-                ->setPassword($this->hasher->hashPassword($user, $user->getPassword()))
-                ->setCity($faker->randomElement($this->dbCities));
+                ->setPassword($this->hasher->hashPassword($user, $user->getPassword()));
 
                 $manager->persist($user);
                 $this->dbUsers[] = $user;
@@ -131,7 +96,6 @@ class AppFixtures extends Fixture
                 ->setNbRoom($faker->numberBetween(2, 8))
                 ->setSurfaceArea($faker->numberBetween(65, 250))
                 ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-3 years')))
-                ->setCity($faker->randomElement($this->dbCities))
                 ->setOwner($faker->randomElement($this->dbOwners));
 
                 // Récupérer un nombre aléatoire de services à partir de dbAdvertServices sans doublon
