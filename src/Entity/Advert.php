@@ -8,6 +8,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use App\Enum\Country;
 use App\Repository\AdvertRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -22,14 +23,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     normalizationContext: ['groups' => ['adverts:read']],
     denormalizationContext: ['groups' => ['adverts:write']],
-    operations: [
-        new GetCollection(),
-        new Get(),
-        new Post(security: "is_granted('ROLE_OWNER')"), 
-        new Patch(security: "is_granted('ROLE_OWNER')"),
-        new Delete(security: "is_granted('ROLE_OWNER')"),
-    ]
   )]
+#[Get]
+#[GetCollection]
+#[Post(security: "is_granted('ROLE_USER')")]
+#[Patch(security: "is_granted('ROLE_ADMIN') or object.getOwner() == user")]
+#[Delete(security: "is_granted('ROLE_ADMIN') or object.getOwner() == user")]
 class Advert
 {
     #[ORM\Id]
@@ -62,7 +61,7 @@ class Advert
         max: 255,
         maxMessage: 'L\'adresse ne peut pas dépasser {{ limit }} caractères.'
     )]
-    #[Groups(['adverts:read', 'adverts:write'])]
+    #[Groups(['adverts:read', 'adverts:write', 'users:read'])]
     private ?string $address = null;
 
     #[ORM\Column(type: 'string', length: 10)]
@@ -71,7 +70,7 @@ class Advert
         pattern: '/^[A-Za-z0-9\- ]{2,10}$/',
         message: 'Le format du code postal est incorrect.'
     )] 
-    #[Groups(['adverts:read', 'adverts:write', 'users:read', 'users:write'])]
+    #[Groups(['adverts:read', 'adverts:write', 'users:read'])]
     private ?string $zipCode = null;
 
     #[ORM\Column(type: 'string', length: 255)]
@@ -83,14 +82,10 @@ class Advert
     #[Groups(['adverts:read', 'adverts:write', 'users:read'])]
     private ?string $city = null;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', enumType: Country::class)]
     #[Assert\NotBlank(message: 'Le pays doit être renseigné.')]
-    #[Assert\Length(
-        max: 255,
-        maxMessage: 'Le pays ne peut pas dépasser {{ limit }} caractères.'
-    )]
     #[Groups(['adverts:read', 'adverts:write', 'users:read'])]
-    private ?string $country = null;
+    private ?Country $country = null;
 
     #[ORM\Column]
     #[Assert\NotNull(message: 'Le nombre de pièces doit être renseigné.')]
@@ -142,7 +137,7 @@ class Advert
     /**
      * @var Collection<int, Service>
      */
-    #[ORM\ManyToMany(targetEntity: Service::class, inversedBy: 'adverts', cascade: ['persist'])]
+    #[ORM\ManyToMany(targetEntity: Service::class, inversedBy: 'adverts')]
     #[Groups(['adverts:read', 'adverts:write'])]
     private Collection $services;
 
@@ -223,12 +218,12 @@ class Advert
         return $this;
     }
 
-    public function getCountry(): ?string
+    public function getCountry(): ?Country
     {
         return $this->country;
     }
 
-    public function setCountry(string $country): static
+    public function setCountry(Country $country): static
     {
         $this->country = $country;
 

@@ -11,7 +11,7 @@
     {
       "email": "jean.durand@example.com",
       "roles": ["ROLE_OWNER"],
-      "password": "Jean123",
+      "password": "Jean12345",
       "firstname": "Jean",
       "lastname": "Durand",
       "gender": 1,
@@ -20,7 +20,7 @@
     {
       "email": "sophie.martin@example.com",
       "roles": ["ROLE_OWNER"],
-      "password": "Sophie234",
+      "password": "Sophie23456",
       "firstname": "Sophie",
       "lastname": "Martin",
       "gender": 2,

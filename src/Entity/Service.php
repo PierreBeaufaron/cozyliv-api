@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ServiceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -9,19 +10,24 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ServiceRepository::class)]
+#[ApiResource(
+    normalizationContext: ['groups' => ['services:read']],
+    denormalizationContext: ['groups' => ['services:write']]
+  )]
 class Service
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['adverts:read', 'advert:write'])]
+    #[Groups(['services:read', 'adverts:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['adverts:read'])]
+    #[Groups(['services:read', 'services:write', 'adverts:read'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['services:read', 'services:write', 'adverts:read'])]
     private ?string $icon = null;
 
     #[ORM\Column]

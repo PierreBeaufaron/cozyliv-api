@@ -2,8 +2,6 @@
 
 namespace App\EventSubscriber;
 
-use App\Entity\City;
-use App\Entity\Country;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\Event\PrePersistEventArgs;
@@ -31,7 +29,16 @@ class UserEventSubscriber
 
     public function preUpdate(PreUpdateEventArgs $args): void
     {
-        $this->handleUserEntity($args->getObject());
+        $entity = $args->getObject();
+
+        if ($entity instanceof User) {
+            $changeSet = $args->getEntityChangeSet();
+
+            // Check if password was changed
+            if (isset($changeSet['password']) && !password_get_info($changeSet['password'][1])['algo']) {
+                $entity->setPassword($this->hasher->hashPassword($entity, $changeSet['password'][1]));
+            }
+        }
 
     }
 
@@ -43,7 +50,7 @@ class UserEventSubscriber
         }
 
         // Hash the password if not already hashed
-        if (!empty($entity->getPassword())) {
+        if (!empty($entity->getPassword()) && !password_get_info($entity->getPassword())['algo']) {
             $entity->setPassword($this->hasher->hashPassword($entity, $entity->getPassword()));
         }
 
@@ -51,8 +58,6 @@ class UserEventSubscriber
         if (empty($entity->getRoles()) || $entity->getRoles() === ['ROLE_USER']) {
             $entity->setRoles(['ROLE_USER']);
         }
-
-        // Écrire la ville et le pays en Capitalize
     }
 
     

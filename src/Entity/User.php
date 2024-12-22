@@ -27,11 +27,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
     normalizationContext: ['groups' => ['users:read']],
     denormalizationContext: ['groups' => ['users:write']]
   )]
-#[Get(security: "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and object == user)")]
+#[Get(security: "is_granted('ROLE_ADMIN') or object == user")]
 #[GetCollection(security: "is_granted('ROLE_ADMIN')")]
 #[Post]
-#[Patch(security: "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and object == user)")]
-#[Delete(security: "is_granted('ROLE_ADMIN') or (is_granted('ROLE_USER') and object == user)")]
+#[Patch(security: "is_granted('ROLE_ADMIN') or object == user")]
+#[Delete(security: "is_granted('ROLE_ADMIN') or object == user")]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]

@@ -25,6 +25,9 @@ services:
     App\EventSubscriber\UserEventSubscriber:
         tags: 
             - { name: doctrine.event_subscriber }
+    App\EventSubscriber\AdvertEventSubscriber:
+        tags: 
+            - { name: doctrine.event_subscriber }
         
     App\EventListener\JWTCreatedListener:
         tags:

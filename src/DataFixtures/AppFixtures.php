@@ -4,8 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Advert;
 use App\Entity\AdvertImg;
-use App\Entity\City;
-use App\Entity\Country;
+use App\Enum\Country;
 use App\Entity\Room;
 use App\Entity\Service;
 use App\Entity\User;
@@ -54,8 +53,7 @@ class AppFixtures extends Fixture
         foreach ($users as $user) {
             $user
                 ->setBirthDate(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-70 years')))
-                ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-3 years')))
-                ->setPassword($this->hasher->hashPassword($user, $user->getPassword()));
+                ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-3 years')));
 
                 $manager->persist($user);
                 $this->dbUsers[] = $user;
@@ -95,6 +93,7 @@ class AppFixtures extends Fixture
             $advert
                 ->setNbRoom($faker->numberBetween(2, 8))
                 ->setSurfaceArea($faker->numberBetween(65, 250))
+                ->setCountry(Country::FRANCE)
                 ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-3 years')))
                 ->setOwner($faker->randomElement($this->dbOwners));
 
