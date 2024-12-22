@@ -2,6 +2,13 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\RoomRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -10,12 +17,21 @@ use Symfony\Component\Serializer\Attribute\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: RoomRepository::class)]
+#[ApiResource(
+    normalizationContext: ['groups' => ['rooms:read']],
+    denormalizationContext: ['groups' => ['rooms:write']]
+  )]
+#[Get]
+#[GetCollection]
+#[Post(securityPostDenormalize: "is_granted('ROOM_CREATE', object)")]
+#[Patch(security: "is_granted('ROLE_ADMIN') or object.getAdvert().getOwner() == user")]
+#[Delete(security: "is_granted('ROLE_ADMIN') or object.getAdvert().getOwner() == user")]
 class Room
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['adverts:read'])]
+    #[Groups(['rooms:read', 'adverts:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 80)]
@@ -26,7 +42,7 @@ class Room
         minMessage: 'Le nom de la chambre doit contenir au moins {{ limit }} caractères.',
         maxMessage: 'Le nom de la chambre ne peut pas dépasser {{ limit }} caractères.'
     )]
-    #[Groups(['adverts:read'])]
+    #[Groups(['rooms:read', 'rooms:write', 'adverts:read'])]
     private ?string $name = null;
 
     #[ORM\Column(type: 'integer')]
@@ -35,16 +51,19 @@ class Room
         max: 9999,
         notInRangeMessage: 'Le prix doit être compris entre {{ min }} et {{ max }}.',
     )]
-    #[Groups(['adverts:read'])]
+    #[Groups(['rooms:read', 'rooms:write', 'adverts:read'])]
     private ?int $rentPrice = null;
 
     #[ORM\Column]
     #[Assert\NotNull(message: 'La surface doit être renseignée.')]
     #[Assert\Positive(message: 'La surface doit être supérieure à 0.')]
+    #[Groups(['rooms:read', 'rooms:write', 'adverts:read'])]
     private ?float $surfaceArea = null;
 
     #[ORM\ManyToOne(inversedBy: 'rooms')]
     #[ORM\JoinColumn(nullable: false)]
+    #[ApiProperty(readableLink: true, writableLink: true)]
+    #[Groups(['rooms:read', 'rooms:write'])]
     private ?Advert $advert = null;
 
     /**

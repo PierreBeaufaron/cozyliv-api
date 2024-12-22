@@ -11,3 +11,4 @@ api_platform:
     collection:
         pagination:
             enabled: false
+    enable_entrypoint: true

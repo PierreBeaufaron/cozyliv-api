@@ -4,7 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Advert;
 use App\Entity\AdvertImg;
-use App\Enum\Country;
+use App\ApiResource\Enum\Country;
 use App\Entity\Room;
 use App\Entity\Service;
 use App\Entity\User;
@@ -91,15 +91,13 @@ class AppFixtures extends Fixture
 
         foreach ($adverts as $advert) {
             $advert
-                ->setNbRoom($faker->numberBetween(2, 8))
                 ->setSurfaceArea($faker->numberBetween(65, 250))
                 ->setCountry(Country::FRANCE)
                 ->setCreatedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-3 years')))
                 ->setOwner($faker->randomElement($this->dbOwners));
 
-                // Récupérer un nombre aléatoire de services à partir de dbAdvertServices sans doublon
                 $randomServices = $faker->randomElements($this->dbAdvertServices, $faker->numberBetween(8, 25));
-                // Ajouter les services générés
+
                 foreach ($randomServices as $service) {
                     $advert->addService($service);
                 }   

@@ -3,7 +3,6 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Advert;
-use App\Entity\Service;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,8 +10,6 @@ use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
 use Symfony\Bundle\SecurityBundle\Security;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-
 #[AsDoctrineListener(event: Events::prePersist)]
 #[AsDoctrineListener(event: Events::preUpdate)]
 class AdvertEventSubscriber
@@ -31,8 +28,8 @@ class AdvertEventSubscriber
         }
 
         $this->assignOwner($entity);
+        $this->capitalizeTitle($entity);
         $this->capitalizeCity($entity);
-        // $this->resolveServices($entity);
     }
 
     public function preUpdate(PreUpdateEventArgs $args): void
@@ -42,8 +39,8 @@ class AdvertEventSubscriber
             return;
         }
 
+        $this->capitalizeTitle($entity);
         $this->capitalizeCity($entity);
-        // $this->resolveServices($entity);
     }
 
     private function assignOwner(Advert $advert): void
@@ -63,6 +60,16 @@ class AdvertEventSubscriber
         }
     }
 
+    // Capitalize the first letter of the title
+    private function capitalizeTitle(Advert $advert): void
+    {
+        $title = $advert->getTitle();
+        if ($title) {
+            $capitalizedTitle = ucfirst(mb_strtolower($title, 'UTF-8'));
+            $advert->setTitle($capitalizedTitle);
+        }
+    }
+
     // Capitalize city's name
     private function capitalizeCity(Advert $advert): void
     {
@@ -72,38 +79,6 @@ class AdvertEventSubscriber
             $advert->setCity($capitalizedCity);
         }
     }
-
-    // Handle services
-    // private function resolveServices(Advert $advert): void
-    // {
-    //     $services = $advert->getServices(); // Obtient la collection envoyée dans le JSON
-    //     $resolvedServices = new \Doctrine\Common\Collections\ArrayCollection();
-
-    //     foreach ($services as $service) {
-    //         if (method_exists($service, 'getId') && $service->getId()) {
-    //             $existingService = $this->entityManager
-    //                 ->getRepository(Service::class)
-    //                 ->find($service->getId());
-    //             if ($existingService) {
-    //                 $resolvedServices->add($existingService);
-    //             } else {
-    //                 error_log("Service with ID {$service->getId()} not found");
-    //             }
-    //         } else {
-    //             error_log("Invalid service object in request");
-    //         }
-    //     }
-
-    //     // Remplace la collection actuelle par les services résolus
-    //     foreach ($advert->getServices() as $service) {
-    //         $advert->removeService($service);
-    //     }
-
-    //     foreach ($resolvedServices as $resolvedService) {
-    //         $advert->addService($resolvedService);
-    //     }
-    // }
-
 
     // TODO Ajouter la logique d'Upload des images
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Enum;
+namespace App\ApiResource\Enum;
 
 enum Country: string
 {

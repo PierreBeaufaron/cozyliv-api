@@ -8,7 +8,7 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use App\Enum\Country;
+use App\ApiResource\Enum\Country;
 use App\Repository\AdvertRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -88,10 +88,8 @@ class Advert
     private ?Country $country = null;
 
     #[ORM\Column]
-    #[Assert\NotNull(message: 'Le nombre de pièces doit être renseigné.')]
-    #[Assert\Positive(message: 'Le nombre de pièces doit être supérieur à zéro.')]
-    #[Groups(['adverts:read', 'adverts:write'])]
-    private ?int $nbRoom = null;
+    #[Groups(['adverts:read'])]
+    private ?int $nbRoom = 0;
 
     #[ORM\Column]
     #[Assert\NotNull(message: 'La surface doit être renseignée.')]
