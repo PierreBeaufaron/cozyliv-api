@@ -31,7 +31,7 @@ class Room
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['rooms:read', 'adverts:read'])]
+    #[Groups(['rooms:read', 'adverts:read', 'booking:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 80)]
@@ -42,7 +42,7 @@ class Room
         minMessage: 'Le nom de la chambre doit contenir au moins {{ limit }} caractères.',
         maxMessage: 'Le nom de la chambre ne peut pas dépasser {{ limit }} caractères.'
     )]
-    #[Groups(['rooms:read', 'rooms:write', 'adverts:read'])]
+    #[Groups(['rooms:read', 'rooms:write', 'adverts:read', 'booking:read'])]
     private ?string $name = null;
 
     #[ORM\Column(type: 'integer')]
@@ -51,7 +51,7 @@ class Room
         max: 9999,
         notInRangeMessage: 'Le prix doit être compris entre {{ min }} et {{ max }}.',
     )]
-    #[Groups(['rooms:read', 'rooms:write', 'adverts:read'])]
+    #[Groups(['rooms:read', 'rooms:write', 'adverts:read', 'booking:read'])]
     private ?int $rentPrice = null;
 
     #[ORM\Column]
@@ -63,13 +63,14 @@ class Room
     #[ORM\ManyToOne(inversedBy: 'rooms')]
     #[ORM\JoinColumn(nullable: false)]
     #[ApiProperty(readableLink: true, writableLink: true)]
-    #[Groups(['rooms:read', 'rooms:write'])]
+    #[Groups(['rooms:read', 'rooms:write', 'booking:read'])]
     private ?Advert $advert = null;
 
     /**
      * @var Collection<int, Booking>
      */
     #[ORM\OneToMany(targetEntity: Booking::class, mappedBy: 'room', orphanRemoval: true)]
+    #[Groups(['adverts:read'])]
     private Collection $bookings;
 
     /**

@@ -2,38 +2,60 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\BookingRepository;
+use App\Validator\BookingDate;
 use Doctrine\DBAL\Types\Types;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: BookingRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+#[ApiResource(
+    normalizationContext: ['groups' => ['booking:read'], 'datetime_format' => 'Y-m-d'],
+    denormalizationContext: ['groups' => ['booking:write'], 'datetime_format' => 'Y-m-d'],
+  )]
+#[Get(security: "is_granted('ROLE_ADMIN') or (object.getTenant() == user) or (object.getRoom().getAdvert().getOwner() == user)")]
+#[Post(security: "is_granted('ROLE_USER')")]
+#[Patch(security: "is_granted('ROLE_ADMIN') or object.geTenant() == user")]
+#[Delete(security: "is_granted('ROLE_ADMIN') or object.getTenant() == user")]
 class Booking
 {
-    #[ORM\Id]
+    #[ORM\Id] 
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['booking:read', 'users:read', 'adverts:read'])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['booking:read', 'booking:write', 'users:read', 'adverts:read', 'rooms:read'])]
     private ?\DateTimeInterface $startDate = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups(['booking:read', 'booking:write', 'users:read', 'adverts:read', 'rooms:read'])]
     private ?\DateTimeInterface $endDate = null;
 
     #[ORM\Column]
+    #[Groups(['booking:read', 'users:read', 'adverts:read', 'rooms:read'])]
     private ?int $status = null;
 
     #[ORM\ManyToOne(inversedBy: 'bookings')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['booking:read', 'booking:write', 'users:read'])]
     private ?Room $room = null;
 
     #[ORM\ManyToOne(inversedBy: 'bookings')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['booking:read', 'adverts:read', 'rooms:read'])]
     private ?User $tenant = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Groups(['booking:read', 'adverts:read', 'rooms:read'])]
     private ?\DateTimeInterface $createdAt = null;
 
     public function getId(): ?int

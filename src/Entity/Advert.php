@@ -34,7 +34,7 @@ class Advert
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['adverts:read', 'users:read'])]
+    #[Groups(['adverts:read', 'users:read', 'booking:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
@@ -43,7 +43,7 @@ class Advert
         max: 255,
         maxMessage: 'Le titre ne peut pas dépasser {{ limit }} caractères.'
     )]
-    #[Groups(['adverts:read', 'adverts:write', 'users:read'])]
+    #[Groups(['adverts:read', 'adverts:write', 'users:read', 'booking:read'])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]

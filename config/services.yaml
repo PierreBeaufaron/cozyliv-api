@@ -28,6 +28,12 @@ services:
     App\EventSubscriber\AdvertEventSubscriber:
         tags: 
             - { name: doctrine.event_subscriber }
+    App\EventSubscriber\RoomEventSubscriber:
+        tags: 
+            - { name: doctrine.event_subscriber }
+    App\EventSubscriber\BookingEventSubscriber:
+        tags: 
+            - { name: doctrine.event_subscriber }
         
     App\EventListener\JWTCreatedListener:
         tags:

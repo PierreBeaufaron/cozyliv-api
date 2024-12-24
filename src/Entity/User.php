@@ -37,13 +37,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['users:read', 'adverts:read'])]
+    #[Groups(['users:read', 'adverts:read', 'booking:read'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
     #[Assert\NotBlank(message: 'L\'adresse email doit être renseignée.')]
     #[Assert\Email(message: 'L\'adresse email est invalide.')]
-    #[Groups(['users:read', 'users:write', 'adverts:read'])]
+    #[Groups(['users:read', 'users:write', 'adverts:read', 'booking:read'])]
     private ?string $email = null;
 
     /**
@@ -68,7 +68,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         minMessage: 'Le prénom doit contenir au moins 3 caractères.',
         maxMessage: 'Le prénom ne doit pas éxcéder 80 caractères.'
     )]
-    #[Groups(['users:read', 'users:write', 'adverts:read'])]
+    #[Groups(['users:read', 'users:write', 'adverts:read', 'booking:read'])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 80)]
@@ -79,7 +79,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         minMessage: 'Le nom doit contenir au moins 3 caractères.',
         maxMessage: 'Le nom ne doit pas éxcéder 80 caractères.'
     )]
-    #[Groups(['users:read', 'users:write', 'adverts:read'])]
+    #[Groups(['users:read', 'users:write', 'adverts:read', 'booking:read'])]
     private ?string $lastname = null;
 
     #[ORM\Column]
