@@ -60,6 +60,6 @@ class UserEventSubscriber
         }
     }
 
-    
+    // TODO Ajouter mail de confirmation
  
 }

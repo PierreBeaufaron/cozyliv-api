@@ -88,4 +88,6 @@ class BookingEventSubscriber
             throw new BadRequestHttpException('La réservation doit durer au moins 30 jours.');
         }
     }
+
+    // TODO Ajouter mail de confirmation
 }

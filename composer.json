@@ -8,6 +8,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "api-platform/doctrine-orm": "^4.0",
+        "api-platform/jsonld": "^4.0",
         "api-platform/symfony": "^4.0",
         "cboden/ratchet": "^0.4.4",
         "doctrine/dbal": "^3",

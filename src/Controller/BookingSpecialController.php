@@ -10,7 +10,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class BookingSpecialController extends AbstractController
 {
-    #[Route('/api/bookings', name: 'get_bookings', methods: ['GET'])]
+    #[Route('/api/bookings', name: 'get_bookings_special', methods: ['GET'])]
     public function getBookings(BookingRepository $bookingRepository): JsonResponse
     {
         $user = $this->getUser();
@@ -19,7 +19,7 @@ class BookingSpecialController extends AbstractController
             return $this->json(['error' => 'Access denied.'], 403);
         }
 
-        // Filtrer les réservations visibles par l'utilisateur
+        // Filer bookings for user or owner
         $bookings = $bookingRepository->findVisibleBookings($user);
 
         return $this->json($bookings);

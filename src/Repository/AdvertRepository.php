@@ -16,28 +16,38 @@ class AdvertRepository extends ServiceEntityRepository
         parent::__construct($registry, Advert::class);
     }
 
-    //    /**
-    //     * @return Advert[] Returns an array of Advert objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('a.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function searchAdverts(?string $location, ?\DateTimeInterface $startDate, ?\DateTimeInterface $endDate, ?int $rooms, ?array $services): array
+    {
+        $qb = $this->createQueryBuilder('a')
+            ->leftJoin('a.rooms', 'r')
+            ->leftJoin('a.services', 's') // Assumes Advert has a relation to services
+            ->addSelect('r', 's');
 
-    //    public function findOneBySomeField($value): ?Advert
-    //    {
-    //        return $this->createQueryBuilder('a')
-    //            ->andWhere('a.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        if ($location) {
+            $qb->andWhere('a.city LIKE :location OR a.country LIKE :location')
+               ->setParameter('location', '%' . $location . '%');
+        }
+
+        if ($startDate && $endDate) {
+            $qb->andWhere(':startDate NOT BETWEEN r.bookings.startDate AND r.bookings.endDate')
+               ->andWhere(':endDate NOT BETWEEN r.bookings.startDate AND r.bookings.endDate')
+               ->andWhere('NOT (:startDate <= r.bookings.startDate AND :endDate >= r.bookings.endDate)')
+               ->setParameter('startDate', $startDate)
+               ->setParameter('endDate', $endDate);
+        }
+
+        // TODO Modifier en fonction de ce que je choisi côté front.
+        if ($rooms) {
+            $qb->andWhere('a.nbRoom >= :rooms')
+               ->setParameter('rooms', $rooms);
+        }
+
+        // For filter with services later
+        if ($services && count($services) > 0) {
+            $qb->andWhere('s.name IN (:services)')
+               ->setParameter('services', $services);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }

@@ -1,6 +1,8 @@
 api_platform:
     title: Hello API Platform
     version: 1.0.0
+    enable_entrypoint: true
+    enable_docs: true
     formats:
         jsonld: ['application/ld+json']
         json: ['application/json']
@@ -8,7 +10,9 @@ api_platform:
         stateless: true
         cache_headers:
             vary: ['Content-Type', 'Authorization', 'Origin']
+        pagination_items_per_page: 20
     collection:
         pagination:
-            enabled: false
-    enable_entrypoint: true
+            enabled: true
+    serializer:
+        hydra_prefix: true
