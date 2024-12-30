@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Delete;
 use ApiPlatform\Metadata\Get;
@@ -44,6 +45,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank(message: 'L\'adresse email doit être renseignée.')]
     #[Assert\Email(message: 'L\'adresse email est invalide.')]
     #[Groups(['users:read', 'users:write', 'adverts:read', 'booking:read'])]
+    #[ApiProperty(security: "is_granted('ROLE_ADMIN') or object == user")]
     private ?string $email = null;
 
     /**
@@ -51,6 +53,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     #[Groups(['users:read', 'users:write'])]
+    #[ApiProperty(security: "is_granted('ROLE_ADMIN') or object == user")]
     private array $roles = [];
 
     /**
@@ -94,6 +97,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Groups(['users:read', 'users:write'])]
+    #[ApiProperty(security: "is_granted('ROLE_ADMIN') or object === user")]
     private ?\DateTimeInterface $birthDate = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -109,6 +113,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Advert::class, mappedBy: 'owner', orphanRemoval: true)]
     #[Groups(['users:read'])]
+    #[ApiProperty(security: "is_granted('ROLE_ADMIN') or object == user")]
     private Collection $adverts;
 
     /**
@@ -116,6 +121,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\OneToMany(targetEntity: Booking::class, mappedBy: 'tenant', orphanRemoval: true)]
     #[Groups(['users:read'])]
+    #[ApiProperty(security: "is_granted('ROLE_ADMIN') or object == user")]
     private Collection $bookings;
 
     /**
