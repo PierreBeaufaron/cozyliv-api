@@ -27,8 +27,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
     normalizationContext: ['groups' => ['users:read']],
     denormalizationContext: ['groups' => ['users:write']]
   )]
-#[Get(security: "is_granted('ROLE_ADMIN') or object == user")]
-#[GetCollection(security: "is_granted('ROLE_ADMIN')")]
+#[Get(security: "is_granted('ROLE_USER')")]
+#[GetCollection(security: "is_granted('ROLE_USER')")]
 #[Post]
 #[Patch(security: "is_granted('ROLE_ADMIN') or object == user")]
 #[Delete(security: "is_granted('ROLE_ADMIN') or object == user")]
