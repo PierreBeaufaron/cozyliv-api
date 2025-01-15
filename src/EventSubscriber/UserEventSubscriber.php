@@ -60,6 +60,8 @@ class UserEventSubscriber
         }
     }
 
+    // TODO Ajouter la logique d'Upload des images
+
     // TODO Ajouter mail de confirmation
  
 }
