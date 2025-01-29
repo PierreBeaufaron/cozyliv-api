@@ -31,6 +31,7 @@ class Service
     private ?string $icon = null;
 
     #[ORM\Column]
+    #[Groups(['services:read', 'adverts:read'])]
     private ?int $type = null;
 
     /**
