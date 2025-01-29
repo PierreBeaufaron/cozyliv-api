@@ -16,11 +16,17 @@ class AdvertRepository extends ServiceEntityRepository
         parent::__construct($registry, Advert::class);
     }
 
-    public function searchAdverts(?string $location, ?\DateTimeInterface $startDate, ?\DateTimeInterface $endDate, ?int $rooms, ?array $services): array
+    public function searchAdverts(
+        ?string $location, 
+        ?\DateTimeInterface $startDate, 
+        ?\DateTimeInterface $endDate, 
+        ?int $rooms, 
+        ?array $services
+        ): array
     {
         $qb = $this->createQueryBuilder('a')
             ->leftJoin('a.rooms', 'r')
-            ->leftJoin('a.services', 's') // Assumes Advert has a relation to services
+            ->leftJoin('a.services', 's')
             ->addSelect('r', 's');
 
         if ($location) {

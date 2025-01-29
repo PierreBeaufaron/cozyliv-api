@@ -29,7 +29,11 @@ class BookingRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function findConflictingBookings(Room $room, \DateTimeInterface $startDate, \DateTimeInterface $endDate): array
+    public function findConflictingBookings(
+        Room $room, 
+        \DateTimeInterface $startDate, 
+        \DateTimeInterface $endDate
+        ): array
     {
         return $this->createQueryBuilder('b')
             ->where('b.room = :room')
