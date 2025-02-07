@@ -26,8 +26,9 @@ class AdvertRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('a')
             ->leftJoin('a.rooms', 'r')
+            ->leftJoin('r.bookings', 'b')
             ->leftJoin('a.services', 's')
-            ->addSelect('r', 's');
+            ->addSelect('r', 'b', 's');
 
         if ($location) {
             $qb->andWhere('a.city LIKE :location OR a.country LIKE :location')
@@ -35,11 +36,13 @@ class AdvertRepository extends ServiceEntityRepository
         }
 
         if ($startDate && $endDate) {
-            $qb->andWhere(':startDate NOT BETWEEN r.bookings.startDate AND r.bookings.endDate')
-               ->andWhere(':endDate NOT BETWEEN r.bookings.startDate AND r.bookings.endDate')
-               ->andWhere('NOT (:startDate <= r.bookings.startDate AND :endDate >= r.bookings.endDate)')
-               ->setParameter('startDate', $startDate)
-               ->setParameter('endDate', $endDate);
+            $qb->andWhere(
+                '(b.id IS NULL OR (:startDate NOT BETWEEN b.startDate AND b.endDate
+                AND :endDate NOT BETWEEN b.startDate AND b.endDate
+                AND NOT (:startDate <= b.startDate AND :endDate >= b.endDate)))'
+            )
+            ->setParameter('startDate', $startDate)
+            ->setParameter('endDate', $endDate);
         }
 
         // Filter by number of rooms with parseRoomRange function.
