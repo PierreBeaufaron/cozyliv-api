@@ -16,10 +16,10 @@ class AdvertSearchController extends AbstractController
         $location = $request->query->get('location');
         $startDate = $request->query->get('startDate') ? new \DateTime($request->query->get('startDate')) : null;
         $endDate = $request->query->get('endDate') ? new \DateTime($request->query->get('endDate')) : null;
-        $rooms = $request->query->get('rooms') ? (int) $request->query->get('rooms') : null;
+        $roomsRange = $request->query->get('colivers');
         $services = $request->query->get('services') ? explode(',', $request->query->get('services')) : [];
 
-        $results = $advertRepository->searchAdverts($location, $startDate, $endDate, $rooms, $services);
+        $results = $advertRepository->searchAdverts($location, $startDate, $endDate, $roomsRange, $services);
 
         return $this->json($results);
     }

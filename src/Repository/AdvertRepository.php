@@ -20,7 +20,7 @@ class AdvertRepository extends ServiceEntityRepository
         ?string $location, 
         ?\DateTimeInterface $startDate, 
         ?\DateTimeInterface $endDate, 
-        ?int $rooms, 
+        ?string $roomsRange, 
         ?array $services
         ): array
     {
@@ -42,10 +42,13 @@ class AdvertRepository extends ServiceEntityRepository
                ->setParameter('endDate', $endDate);
         }
 
-        // TODO Modifier en fonction de ce que je choisi côté front.
-        if ($rooms) {
-            $qb->andWhere('a.nbRoom >= :rooms')
-               ->setParameter('rooms', $rooms);
+        // Filter by number of rooms with parseRoomRange function.
+        if ($roomsRange) {
+            [$minRooms, $maxRooms] = $this->parseRoomsRange($roomsRange);
+            
+            $qb->andWhere('a.nbRoom BETWEEN :minRooms AND :maxRooms')
+               ->setParameter('minRooms', $minRooms)
+               ->setParameter('maxRooms', $maxRooms);
         }
 
         // For filter with services later
@@ -55,5 +58,21 @@ class AdvertRepository extends ServiceEntityRepository
         }
 
         return $qb->getQuery()->getResult();
+    }
+
+    private function parseRoomsRange(string $roomsRange): array
+    {
+        switch ($roomsRange) {
+            case '2-3':
+                return [2, 3];
+            case '4-6':
+                return [4, 6];
+            case '7-9':
+                return [7, 9];
+            case '10+':
+                return [10, 999];
+            default:
+                return [0, 999];
+        }
     }
 }
