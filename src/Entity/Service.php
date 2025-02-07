@@ -3,6 +3,11 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Post;
 use App\Repository\ServiceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,9 +16,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ServiceRepository::class)]
 #[ApiResource(
+    paginationEnabled: false,
     normalizationContext: ['groups' => ['services:read']],
     denormalizationContext: ['groups' => ['services:write']]
   )]
+  #[Get(security: "is_granted('ROLE_USER')")]
+  #[GetCollection(security: "is_granted('ROLE_USER')")]
+  #[Post(security: "is_granted('ROLE_ADMIN')")]
+  #[Patch(security: "is_granted('ROLE_ADMIN')")]
+  #[Delete(security: "is_granted('ROLE_ADMIN')")]
 class Service
 {
     #[ORM\Id]
