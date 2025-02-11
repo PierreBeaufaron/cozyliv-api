@@ -3,13 +3,17 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Advert;
+use App\Entity\AdvertImg;
 use App\Entity\User;
+use App\Service\ImageUploaderService;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Event\PreUpdateEventArgs;
 use Doctrine\ORM\Events;
 use Symfony\Bundle\SecurityBundle\Security;
+use Symfony\Component\HttpFoundation\RequestStack;
+
 #[AsDoctrineListener(event: Events::prePersist)]
 #[AsDoctrineListener(event: Events::preUpdate)]
 class AdvertEventSubscriber
@@ -17,7 +21,7 @@ class AdvertEventSubscriber
 
     public function __construct(
         private Security $security,
-        private EntityManagerInterface $entityManager
+        private EntityManagerInterface $entityManager,
     ) {}
     
     public function prePersist(PrePersistEventArgs $args): void
@@ -30,6 +34,9 @@ class AdvertEventSubscriber
         $this->assignOwner($entity);
         $this->capitalizeTitle($entity);
         $this->capitalizeCity($entity);
+
+         // AdvertImg traitement
+         $this->processImages($entity);
     }
 
     public function preUpdate(PreUpdateEventArgs $args): void
@@ -80,7 +87,16 @@ class AdvertEventSubscriber
         }
     }
 
-    // TODO Ajouter la logique d'Upload des images
+    private function processImages(Advert $advert): void
+    {
+        $currentImages = $advert->getAdvertImgs()->toArray();
+
+        foreach ($currentImages as $imgData) {
+            if (!$imgData->getId()) { // Si l'image n'a pas encore d'identifiant (non persistée)
+                $imgData->setAdvert($advert);
+            }
+        }
+    }
 
     // TODO Ajouter mail de confirmation
 }
