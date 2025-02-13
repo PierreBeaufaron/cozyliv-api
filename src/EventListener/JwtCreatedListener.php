@@ -19,6 +19,7 @@ final class JWTCreatedListener
         $user = $event->getUser();
 
         if (!$user instanceof User) {
+            dump('Not an instance of User');
             return;
         }
 
