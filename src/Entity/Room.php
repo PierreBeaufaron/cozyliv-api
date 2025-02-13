@@ -77,6 +77,7 @@ class Room
      * @var Collection<int, Service>
      */
     #[ORM\ManyToMany(targetEntity: Service::class, inversedBy: 'rooms')]
+    #[Groups(['adverts:read'])]
     private Collection $services;
 
     public function __construct()
